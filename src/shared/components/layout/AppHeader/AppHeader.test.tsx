@@ -37,7 +37,7 @@ describe('AppHeader', () => {
       'href',
       '/'
     )
-    expect(screen.getByRole('link', { name: 'Tüm Pokemonlar' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Tüm Pokémonlar' })).toHaveAttribute(
       'href',
       '/pokemon'
     )
@@ -45,7 +45,7 @@ describe('AppHeader', () => {
       'href',
       '/login'
     )
-    expect(screen.getByPlaceholderText('Pokemon ara...')).toBeVisible()
+    expect(screen.getByPlaceholderText('Pokémon ara...')).toBeVisible()
   })
 
   it('renders current user and calls logout', async () => {

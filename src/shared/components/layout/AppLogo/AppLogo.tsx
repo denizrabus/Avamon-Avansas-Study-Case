@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { routes } from '../../../../app/routes'
+import { AvamonMark } from '../../brand/AvamonMark'
 
 export function AppLogo() {
   return (
@@ -8,12 +9,7 @@ export function AppLogo() {
       className="inline-flex items-center gap-2 text-xl font-black text-white"
       to={routes.home}
     >
-      <span
-        aria-hidden="true"
-        className="size-5 rounded-full border border-avamon-yellow bg-transparent p-0.5"
-      >
-        <span className="block size-full rounded-full bg-avamon-yellow" />
-      </span>
+      <AvamonMark className="size-5 text-avamon-yellow" />
       Avamon
     </Link>
   )

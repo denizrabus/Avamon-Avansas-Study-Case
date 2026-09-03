@@ -2,6 +2,7 @@ import { type ReactNode } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import { AvamonMark } from '../../../../shared/components/brand/AvamonMark'
 import { Button, Card, FormField, Input } from '../../../../shared/components/ui'
 import { demoUsers } from '../../demo-users'
 import { loginSchema, type LoginFormValues } from '../../login-schema'
@@ -35,12 +36,7 @@ export function LoginForm({ error, footer, onSubmit }: LoginFormProps) {
   return (
     <Card className="mx-auto w-full max-w-[440px] p-10 shadow-card">
       <div className="mb-6 flex items-center justify-center gap-3">
-      <span
-        aria-hidden="true"
-        className="size-6 rounded-full border-2 border-avamon-red bg-transparent p-0.5"
-      >
-        <span className="block size-full rounded-full bg-avamon-red" />
-      </span>
+        <AvamonMark className="size-6 text-avamon-red" />
         <h1 className="text-2xl font-bold text-ink">Avamon'a Giriş</h1>
       </div>
 
