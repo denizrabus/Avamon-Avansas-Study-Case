@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-avamon-red: #e3350d;
+  --color-avamon-red-dark: #c13809;
+  --color-avamon-red-soft: #e85030;
+  --color-avamon-yellow: #ffc808;
+  --color-avamon-yellow-hover: #ffd83d;
+
+  --color-page-bg: #f0f0f0;
+  --color-login-bg: #eee5dc;
+  --color-surface: #ffffff;
+  --color-ink: #1a1a2e;
+  --color-muted: #707880;
+  --color-line: #e0e0e0;
+
+  --color-type-grass: #78c850;
+  --color-type-poison: #a040a0;
+  --color-type-fire: #f08030;
+  --color-type-water: #6890f0;
+  --color-type-bug: #a8b820;
+  --color-type-flying: #a890f0;
+  --color-type-normal: #a8a878;
+  --color-type-electric: #ffc808;
+
+  --color-type-grass-soft: #f0f8f0;
+  --color-type-fire-soft: #fff8f0;
+  --color-type-water-soft: #f0f8ff;
+  --color-type-bug-soft: #fffff0;
+  --color-type-poison-soft: #f8f0f8;
+
+  --breakpoint-phone: 22.5rem;
+  --breakpoint-phone-lg: 25.75rem;
+  --breakpoint-tablet: 64rem;
+  --breakpoint-desktop: 80rem;
+  --breakpoint-wide: 160rem;
+
+  --container-page: 78rem;
+  --container-wide-page: 90rem;
+
+  --radius-card: 0.5rem;
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 0.08);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--color-page-bg);
+  color: var(--color-ink);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
