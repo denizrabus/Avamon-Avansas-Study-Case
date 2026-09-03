@@ -22,7 +22,7 @@ export function PokemonPagination({
     >
       <button
         aria-label="Önceki sayfa"
-        className="grid size-10 place-items-center rounded-lg bg-surface text-muted shadow-sm transition hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
+        className="grid size-10 cursor-pointer place-items-center rounded-lg bg-surface text-muted shadow-sm transition hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
         type="button"
@@ -43,8 +43,8 @@ export function PokemonPagination({
             aria-current={item === currentPage ? 'page' : undefined}
             className={`grid size-10 place-items-center rounded-lg text-sm font-black shadow-sm transition ${
               item === currentPage
-                ? 'bg-avamon-red text-white'
-                : 'bg-surface text-ink hover:bg-avamon-red/10'
+                ? 'cursor-default bg-avamon-red text-white'
+                : 'cursor-pointer bg-surface text-ink hover:bg-avamon-red/10'
             }`}
             key={item}
             onClick={() => onPageChange(item)}
@@ -57,7 +57,7 @@ export function PokemonPagination({
 
       <button
         aria-label="Sonraki sayfa"
-        className="grid size-10 place-items-center rounded-lg bg-surface text-muted shadow-sm transition hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
+        className="grid size-10 cursor-pointer place-items-center rounded-lg bg-surface text-muted shadow-sm transition hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
         type="button"

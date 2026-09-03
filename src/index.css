@@ -38,8 +38,18 @@
   --color-type-water-soft: #f0f8ff;
   --color-type-bug-soft: #fffff0;
   --color-type-poison-soft: #f8f0f8;
+  --color-type-normal-soft: #f4f4ed;
   --color-type-electric-soft: #fffbea;
   --color-type-ice-soft: #f0ffff;
+  --color-type-fighting-soft: #fff0ef;
+  --color-type-ground-soft: #fff8e8;
+  --color-type-flying-soft: #f3efff;
+  --color-type-psychic-soft: #fff0f5;
+  --color-type-rock-soft: #f8f3df;
+  --color-type-ghost-soft: #f3eff8;
+  --color-type-dragon-soft: #f1ecff;
+  --color-type-dark-soft: #f4efec;
+  --color-type-steel-soft: #f5f5fb;
   --color-type-fairy-soft: #fff2f6;
 
   --breakpoint-phone: 22.5rem;

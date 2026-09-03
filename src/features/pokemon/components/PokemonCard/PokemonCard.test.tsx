@@ -26,4 +26,25 @@ describe('PokemonCard', () => {
     expect(screen.getByText('#0025')).toBeVisible()
     expect(screen.getByText('Electric')).toBeVisible()
   })
+
+  it('prioritizes above-the-fold card images when requested', () => {
+    render(
+      <MemoryRouter>
+        <PokemonCard
+          pokemon={{
+            id: 25,
+            imageUrl: 'https://example.com/pikachu.png',
+            name: 'pikachu',
+            types: ['electric'],
+          }}
+          priority
+        />
+      </MemoryRouter>
+    )
+
+    const image = screen.getByRole('img', { name: 'Pikachu' })
+
+    expect(image).toHaveAttribute('loading', 'eager')
+    expect(image).toHaveAttribute('fetchpriority', 'high')
+  })
 })

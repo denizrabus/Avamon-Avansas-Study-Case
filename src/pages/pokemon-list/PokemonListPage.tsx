@@ -65,11 +65,12 @@ export function PokemonListPage() {
         : [],
     [referencesQuery.data, sortOption]
   )
-  const totalPages = getPokemonTotalPages(
-    referencesQuery.data?.count ?? 0,
-    itemsPerPage
-  )
-  const currentPage = clampPage(requestedPage, totalPages)
+  const totalPages = referencesQuery.data
+    ? getPokemonTotalPages(sortedReferences.length, itemsPerPage)
+    : requestedPage
+  const currentPage = referencesQuery.data
+    ? clampPage(requestedPage, totalPages)
+    : requestedPage
   const pageReferences = useMemo(
     () => paginatePokemonReferences(sortedReferences, currentPage, itemsPerPage),
     [currentPage, sortedReferences]
@@ -77,6 +78,10 @@ export function PokemonListPage() {
   const summariesQuery = usePokemonSummariesQuery(pageReferences)
 
   useEffect(() => {
+    if (!referencesQuery.data) {
+      return
+    }
+
     if (requestedPage === currentPage) {
       return
     }
@@ -85,7 +90,13 @@ export function PokemonListPage() {
       updateSearchParams(searchParams, { page: String(currentPage) }),
       { replace: true }
     )
-  }, [currentPage, requestedPage, searchParams, setSearchParams])
+  }, [
+    currentPage,
+    referencesQuery.data,
+    requestedPage,
+    searchParams,
+    setSearchParams,
+  ])
 
   function handleTypeChange(type: PokemonTypeName | null) {
     setSearchParams(
@@ -126,8 +137,8 @@ export function PokemonListPage() {
       <section className="mx-auto max-w-page">
         <div className="flex flex-col gap-5 tablet:flex-row tablet:items-center tablet:justify-between">
           <div className="flex items-end gap-4">
-            <h1 className="text-4xl font-black text-ink">Tüm Pokémon</h1>
-            <p className="pb-1 text-base font-bold text-muted">
+            <h1 className="text-4xl font-bold text-ink">Tüm Pokémon</h1>
+            <p className="pb-1 text-base text-muted">
               {formatPokemonCount(referencesQuery.data?.count ?? 1302)} pokémon
             </p>
           </div>
@@ -152,22 +163,48 @@ export function PokemonListPage() {
         ) : null}
 
         {isLoading ? (
-          <div className="mt-8 grid gap-5 tablet:grid-cols-3 desktop:grid-cols-4 wide:grid-cols-6">
-            {Array.from({ length: itemsPerPage }, (_, index) => (
-              <div
-                className="h-72 animate-pulse rounded-card bg-surface shadow-card"
-                key={index}
-              />
-            ))}
-          </div>
+          displayMode === 'grid' ? (
+            <div className="mt-8 grid gap-5 tablet:grid-cols-3 desktop:grid-cols-6">
+              {Array.from({ length: itemsPerPage }, (_, index) => (
+                <div
+                  className="h-80 animate-pulse overflow-hidden rounded-card bg-surface shadow-card"
+                  key={index}
+                >
+                  <div className="h-48 bg-gradient-to-b from-white to-[#f6f6f6]" />
+                  <div className="h-32 bg-gradient-to-r from-white to-[#f4f4ed]" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 flex flex-col gap-4">
+              {Array.from({ length: itemsPerPage }, (_, index) => (
+                <div
+                  className="grid min-h-24 animate-pulse grid-cols-[4rem_4.5rem_1fr] items-center gap-4 rounded-card bg-gradient-to-r from-white to-[#f4f4ed] px-5 py-4 shadow-card phone-lg:grid-cols-[5rem_5rem_1fr_auto]"
+                  key={index}
+                >
+                  <div className="size-16 rounded-full bg-line/40" />
+                  <div className="h-4 w-14 rounded-full bg-line/50" />
+                  <div className="h-5 w-40 rounded-full bg-line/50" />
+                  <div className="col-span-3 flex justify-end gap-2 phone-lg:col-span-1">
+                    <div className="h-6 w-16 rounded-full bg-line/50" />
+                    <div className="h-6 w-16 rounded-full bg-line/40" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
         ) : null}
 
         {!isLoading && !isError && summariesQuery.data ? (
           <>
             {displayMode === 'grid' ? (
-              <div className="mt-8 grid gap-5 phone-lg:grid-cols-2 tablet:grid-cols-3 desktop:grid-cols-4 wide:grid-cols-6">
-                {summariesQuery.data.map((pokemon) => (
-                  <PokemonCard key={pokemon.id} pokemon={pokemon} />
+              <div className="mt-8 grid gap-5 phone-lg:grid-cols-2 tablet:grid-cols-3 desktop:grid-cols-6">
+                {summariesQuery.data.map((pokemon, index) => (
+                  <PokemonCard
+                    key={pokemon.id}
+                    pokemon={pokemon}
+                    priority={index < 12}
+                  />
                 ))}
               </div>
             ) : (

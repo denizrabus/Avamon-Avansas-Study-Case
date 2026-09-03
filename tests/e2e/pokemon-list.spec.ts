@@ -49,7 +49,7 @@ async function mockPokemonApi(page: Page) {
   })
 
   await page.route(
-    'https://pokeapi.co/api/v2/pokemon?limit=1302&offset=0',
+    'https://pokeapi.co/api/v2/pokemon?limit=2000&offset=0',
     async (route) => {
       await route.fulfill({
         contentType: 'application/json',

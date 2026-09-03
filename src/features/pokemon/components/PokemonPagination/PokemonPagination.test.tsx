@@ -8,8 +8,25 @@ import { getPaginationItems } from './pokemon-pagination-utils'
 describe('PokemonPagination', () => {
   it('builds compact pagination items', () => {
     expect(getPaginationItems(1, 3)).toEqual([1, 2, 3])
-    expect(getPaginationItems(3, 55)).toEqual([1, 2, 3, 'ellipsis', 55])
-    expect(getPaginationItems(55, 55)).toEqual([1, 'ellipsis', 53, 54, 55])
+    expect(getPaginationItems(3, 57)).toEqual([1, 2, 3, 4, 5, 'ellipsis', 57])
+    expect(getPaginationItems(48, 57)).toEqual([
+      1,
+      'ellipsis',
+      47,
+      48,
+      49,
+      'ellipsis',
+      57,
+    ])
+    expect(getPaginationItems(57, 57)).toEqual([
+      1,
+      'ellipsis',
+      53,
+      54,
+      55,
+      56,
+      57,
+    ])
   })
 
   it('notifies parent when a page button is selected', async () => {

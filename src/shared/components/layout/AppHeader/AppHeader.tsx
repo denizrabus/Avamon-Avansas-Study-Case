@@ -14,17 +14,17 @@ export function AppHeader({ onLogout }: AppHeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 bg-avamon-red shadow-md">
-      <div className="mx-auto flex min-h-16 max-w-page items-center gap-10 px-6">
+      <div className="mx-auto flex min-h-16 max-w-page items-center gap-10">
         <AppLogo />
 
         <nav className="hidden items-center gap-6 text-sm  text-white tablet:flex">
-          <Link to={routes.pokemonList}>Tüm Pokemonlar</Link>
+          <Link to={routes.pokemonList}>Tüm Pokémonlar</Link>
         </nav>
 
         <div className="hidden flex-1 tablet:block">
           <input
             className="h-9 w-full max-w-sm rounded-full border-2 border-white/35 bg-white/15 px-5 text-sm font-semibold text-white outline-none placeholder:text-white/75 focus:border-avamon-yellow"
-            placeholder="Pokemon ara..."
+            placeholder="Pokémon ara..."
             type="search"
           />
         </div>

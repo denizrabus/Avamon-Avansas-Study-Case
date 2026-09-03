@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+import { PokemonImage } from '../PokemonImage'
 import { TypeBadge } from '../TypeBadge'
 import {
   formatPokemonName,
@@ -12,24 +13,37 @@ interface PokemonListRowProps {
 }
 
 const rowBackgroundClasses: Record<PokemonTypeName, string> = {
-  bug: 'bg-type-bug-soft',
-  dark: 'bg-surface',
-  dragon: 'bg-surface',
-  electric: 'bg-type-electric-soft',
-  fairy: 'bg-type-fairy-soft',
-  fighting: 'bg-surface',
-  fire: 'bg-type-fire-soft',
-  flying: 'bg-surface',
-  ghost: 'bg-surface',
-  grass: 'bg-type-grass-soft',
-  ground: 'bg-surface',
-  ice: 'bg-type-ice-soft',
-  normal: 'bg-surface',
-  poison: 'bg-type-poison-soft',
-  psychic: 'bg-surface',
-  rock: 'bg-surface',
-  steel: 'bg-surface',
-  water: 'bg-type-water-soft',
+  bug: '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-bug-soft)_100%)]',
+  dark: '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-dark-soft)_100%)]',
+  dragon:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-dragon-soft)_100%)]',
+  electric:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-electric-soft)_100%)]',
+  fairy:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-fairy-soft)_100%)]',
+  fighting:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-fighting-soft)_100%)]',
+  fire: '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-fire-soft)_100%)]',
+  flying:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-flying-soft)_100%)]',
+  ghost:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-ghost-soft)_100%)]',
+  grass:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-grass-soft)_100%)]',
+  ground:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-ground-soft)_100%)]',
+  ice: '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-ice-soft)_100%)]',
+  normal:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-normal-soft)_100%)]',
+  poison:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-poison-soft)_100%)]',
+  psychic:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-psychic-soft)_100%)]',
+  rock: '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-rock-soft)_100%)]',
+  steel:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-steel-soft)_100%)]',
+  water:
+    '[background:linear-gradient(90deg,#fff_0%,#fff_72%,var(--color-type-water-soft)_100%)]',
 }
 
 export function PokemonListRow({ pokemon }: PokemonListRowProps) {
@@ -41,9 +55,11 @@ export function PokemonListRow({ pokemon }: PokemonListRowProps) {
       to={`/pokemon/${pokemon.name}`}
     >
       <span className="flex size-16 items-center justify-center rounded-full bg-surface/80">
-        <img
+        <PokemonImage
           alt={formatPokemonName(pokemon.name)}
-          className="size-14 object-contain"
+          className="size-14 rounded-full"
+          fallbackClassName="size-10"
+          imageClassName="size-14 object-contain"
           src={pokemon.imageUrl}
         />
       </span>

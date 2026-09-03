@@ -10,6 +10,7 @@ import {
 } from './pokemon-types'
 
 const pokemonApiBaseUrl = 'https://pokeapi.co/api/v2'
+const pokemonListLimit = 2000
 const officialArtworkBaseUrl =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork'
 
@@ -35,6 +36,9 @@ interface PokemonDetailResponse {
   sprites: {
     front_default?: string | null
     other?: {
+      home?: {
+        front_default?: string | null
+      }
       'official-artwork'?: {
         front_default?: string | null
       }
@@ -80,6 +84,7 @@ function toPokemonSummary(response: PokemonDetailResponse): PokemonSummary {
     id: response.id,
     imageUrl:
       response.sprites.other?.['official-artwork']?.front_default ??
+      response.sprites.other?.home?.front_default ??
       response.sprites.front_default ??
       `${officialArtworkBaseUrl}/${response.id}.png`,
     name: response.name,
@@ -89,16 +94,17 @@ function toPokemonSummary(response: PokemonDetailResponse): PokemonSummary {
 
 export async function fetchPokemonReferences(): Promise<PokemonReferenceCollection> {
   const response = await fetchJson<PokemonListResponse>(
-    `${pokemonApiBaseUrl}/pokemon?limit=1302&offset=0`
+    `${pokemonApiBaseUrl}/pokemon?limit=${pokemonListLimit}&offset=0`
   )
+  const results = response.results.flatMap((resource) => {
+    const reference = toPokemonReference(resource)
+
+    return reference ? [reference] : []
+  })
 
   return {
-    count: response.count,
-    results: response.results.flatMap((resource) => {
-      const reference = toPokemonReference(resource)
-
-      return reference ? [reference] : []
-    }),
+    count: results.length,
+    results,
   }
 }
 
@@ -115,7 +121,6 @@ export async function fetchPokemonReferencesByType(
 
       return reference ? [reference] : []
     })
-    .filter((pokemon) => pokemon.id <= 1302)
 
   return {
     count: results.length,
