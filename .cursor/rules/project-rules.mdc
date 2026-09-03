@@ -1,0 +1,6 @@
+---
+description: Repository-wide AI rules
+alwaysApply: true
+---
+
+Read and follow `AGENTS.md` at the repository root before making changes.
