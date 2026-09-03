@@ -1,0 +1,33 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+
+import { PokemonListControls } from './PokemonListControls'
+
+describe('PokemonListControls', () => {
+  it('notifies parent when filter, sort, and display mode change', async () => {
+    const user = userEvent.setup()
+    const handleDisplayModeChange = vi.fn()
+    const handleSortChange = vi.fn()
+    const handleTypeChange = vi.fn()
+
+    render(
+      <PokemonListControls
+        displayMode="grid"
+        onDisplayModeChange={handleDisplayModeChange}
+        onSortChange={handleSortChange}
+        onTypeChange={handleTypeChange}
+        sortOption="number-asc"
+        typeFilter={null}
+      />
+    )
+
+    await user.selectOptions(screen.getByLabelText('Tür filtresi'), 'fire')
+    await user.selectOptions(screen.getByLabelText('Sıralama'), 'name-desc')
+    await user.click(screen.getByRole('button', { name: 'Liste görünüm' }))
+
+    expect(handleTypeChange).toHaveBeenCalledWith('fire')
+    expect(handleSortChange).toHaveBeenCalledWith('name-desc')
+    expect(handleDisplayModeChange).toHaveBeenCalledWith('list')
+  })
+})

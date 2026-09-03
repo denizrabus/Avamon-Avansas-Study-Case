@@ -1,0 +1,1 @@
+export { PokemonPagination } from './PokemonPagination'

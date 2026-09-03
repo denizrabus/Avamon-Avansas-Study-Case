@@ -22,12 +22,25 @@
   --color-type-flying: #a890f0;
   --color-type-normal: #a8a878;
   --color-type-electric: #ffc808;
+  --color-type-ice: #98d8d8;
+  --color-type-fighting: #c03028;
+  --color-type-ground: #e0c068;
+  --color-type-psychic: #f85888;
+  --color-type-rock: #b8a038;
+  --color-type-ghost: #705898;
+  --color-type-dragon: #7038f8;
+  --color-type-dark: #705848;
+  --color-type-steel: #b8b8d0;
+  --color-type-fairy: #ee99ac;
 
   --color-type-grass-soft: #f0f8f0;
   --color-type-fire-soft: #fff8f0;
   --color-type-water-soft: #f0f8ff;
   --color-type-bug-soft: #fffff0;
   --color-type-poison-soft: #f8f0f8;
+  --color-type-electric-soft: #fffbea;
+  --color-type-ice-soft: #f0ffff;
+  --color-type-fairy-soft: #fff2f6;
 
   --breakpoint-phone: 22.5rem;
   --breakpoint-phone-lg: 25.75rem;
