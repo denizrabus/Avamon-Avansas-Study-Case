@@ -6,32 +6,12 @@ import {
   formatPokemonName,
   formatPokemonNumber,
 } from '../../pokemon-list-utils'
-import { type PokemonSummary, type PokemonTypeName } from '../../pokemon-types'
+import { pokemonTypeCardGradientClasses } from '../../pokemon-type-styles'
+import { type PokemonSummary } from '../../pokemon-types'
 
 interface PokemonCardProps {
   pokemon: PokemonSummary
   priority?: boolean
-}
-
-const cardBackgroundClasses: Record<PokemonTypeName, string> = {
-  bug: 'from-white to-type-bug-soft',
-  dark: 'from-white to-type-dark-soft',
-  dragon: 'from-white to-type-dragon-soft',
-  electric: 'from-white to-type-electric-soft',
-  fairy: 'from-white to-type-fairy-soft',
-  fighting: 'from-white to-type-fighting-soft',
-  fire: 'from-white to-type-fire-soft',
-  flying: 'from-white to-type-flying-soft',
-  ghost: 'from-white to-type-ghost-soft',
-  grass: 'from-white to-type-grass-soft',
-  ground: 'from-white to-type-ground-soft',
-  ice: 'from-white to-type-ice-soft',
-  normal: 'from-white to-type-normal-soft',
-  poison: 'from-white to-type-poison-soft',
-  psychic: 'from-white to-type-psychic-soft',
-  rock: 'from-white to-type-rock-soft',
-  steel: 'from-white to-type-steel-soft',
-  water: 'from-white to-type-water-soft',
 }
 
 export function PokemonCard({ pokemon, priority = false }: PokemonCardProps) {
@@ -54,7 +34,7 @@ export function PokemonCard({ pokemon, priority = false }: PokemonCardProps) {
       </div>
 
       <div
-        className={`flex min-h-32 flex-1 flex-col items-center bg-gradient-to-r px-5 py-4 text-center ${cardBackgroundClasses[primaryType]}`}
+        className={`flex min-h-32 flex-1 flex-col items-center bg-gradient-to-r px-5 py-4 text-center ${pokemonTypeCardGradientClasses[primaryType]}`}
       >
         <p className="text-sm font-black text-muted">
           {formatPokemonNumber(pokemon.id)}
