@@ -33,6 +33,7 @@ These rules are the canonical source for AI-assisted development in this reposit
 - Reusable and feature components use a folder-per-component structure.
 - Each component folder contains `ComponentName.tsx`, `ComponentName.test.tsx`, and `index.ts`.
 - Feature-level logic files such as slices, schemas, types, and utilities may stay at the feature root.
+- Pokemon type visual styles must be centralized in `src/features/pokemon/pokemon-type-styles.ts`; components must not define local type-to-style maps.
 
 ## Styling Rules
 
