@@ -8,7 +8,34 @@ import { describe, expect, it, vi } from 'vitest'
 import { AppHeader } from './AppHeader'
 import { authReducer } from '../../../../features/auth/auth-slice'
 
-function renderHeader(preloadedAuthState?: ReturnType<typeof authReducer>) {
+vi.mock('../../../../features/pokemon/pokemon-query', () => ({
+  usePokemonReferencesQuery: () => ({
+    data: {
+      count: 2,
+      results: [
+        {
+          id: 1,
+          name: 'bulbasaur',
+          url: 'https://pokeapi.co/api/v2/pokemon/1/',
+        },
+        {
+          id: 25,
+          name: 'pikachu',
+          url: 'https://pokeapi.co/api/v2/pokemon/25/',
+        },
+      ],
+    },
+    isLoading: false,
+  }),
+}))
+
+function renderHeader({
+  onLogout = vi.fn(),
+  preloadedAuthState,
+}: {
+  onLogout?: () => void
+  preloadedAuthState?: ReturnType<typeof authReducer>
+} = {}) {
   const store = configureStore({
     preloadedState: preloadedAuthState
       ? {
@@ -23,7 +50,7 @@ function renderHeader(preloadedAuthState?: ReturnType<typeof authReducer>) {
   render(
     <Provider store={store}>
       <MemoryRouter>
-        <AppHeader onLogout={vi.fn()} />
+        <AppHeader onLogout={onLogout} />
       </MemoryRouter>
     </Provider>
   )
@@ -45,7 +72,7 @@ describe('AppHeader', () => {
       'href',
       '/login'
     )
-    expect(screen.getByPlaceholderText('Pokémon ara...')).toBeVisible()
+    expect(screen.getByRole('combobox', { name: 'Pokémon ara' })).toBeVisible()
   })
 
   it('opens mobile menu with visitor actions', async () => {
@@ -64,7 +91,9 @@ describe('AppHeader', () => {
     expect(
       within(mobileMenu).getByRole('link', { name: 'Tüm Pokémonlar' })
     ).toHaveAttribute('href', '/pokemon')
-    expect(within(mobileMenu).getByPlaceholderText('Pokémon ara...')).toBeVisible()
+    expect(
+      within(mobileMenu).getByRole('combobox', { name: 'Pokémon ara' })
+    ).toBeVisible()
     expect(within(mobileMenu).getByRole('link', { name: 'Giriş Yap' }))
       .toHaveAttribute('href', '/login')
   })
@@ -72,33 +101,51 @@ describe('AppHeader', () => {
   it('renders current user and calls logout', async () => {
     const user = userEvent.setup()
     const handleLogout = vi.fn()
-    const store = configureStore({
-      preloadedState: {
-        auth: {
-          currentUser: {
-            avatarPokemonId: 25,
-            fullName: 'Güven Altuntaş',
-            username: 'guven',
-          },
-          token: 'mock-token-guven',
+
+    renderHeader({
+      onLogout: handleLogout,
+      preloadedAuthState: {
+        currentUser: {
+          avatarPokemonId: 25,
+          fullName: 'Güven Altuntaş',
+          username: 'guven',
         },
-      },
-      reducer: {
-        auth: authReducer,
+        token: 'mock-token-guven',
       },
     })
-
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <AppHeader onLogout={handleLogout} />
-        </MemoryRouter>
-      </Provider>
-    )
 
     expect(screen.getByText('Güven Altuntaş')).toBeVisible()
 
     await user.click(screen.getByRole('button', { name: 'Çıkış' }))
+
+    expect(handleLogout).toHaveBeenCalledTimes(1)
+  })
+
+  it('shows authenticated user actions in the mobile menu', async () => {
+    const user = userEvent.setup()
+    const handleLogout = vi.fn()
+
+    renderHeader({
+      onLogout: handleLogout,
+      preloadedAuthState: {
+        currentUser: {
+          avatarPokemonId: 25,
+          fullName: 'Güven Altuntaş',
+          username: 'guven',
+        },
+        token: 'mock-token-guven',
+      },
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Menüyü aç' }))
+
+    const mobileMenu = screen.getByRole('region', { name: 'Mobil menü' })
+
+    expect(within(mobileMenu).getByText('Güven Altuntaş')).toBeVisible()
+
+    await user.click(
+      within(mobileMenu).getByRole('button', { name: 'Çıkış' })
+    )
 
     expect(handleLogout).toHaveBeenCalledTimes(1)
   })

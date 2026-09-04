@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { AppHeaderUserAvatar } from './AppHeaderUserAvatar'
 import { routes } from '../../../../app/routes'
 import { type AuthenticatedUser } from '../../../../features/auth/auth-types'
+import { PokemonSearchSelect } from '../../../../features/pokemon/components/PokemonSearchSelect'
 
 interface AppHeaderMobileMenuProps {
   currentUser: AuthenticatedUser | null
@@ -28,11 +29,7 @@ export function AppHeaderMobileMenu({
           </Link>
         </nav>
 
-        <input
-          className="h-10 rounded-full border-2 border-white/35 bg-white/15 px-5 text-sm font-semibold text-white outline-none placeholder:text-white/75 focus:border-avamon-yellow"
-          placeholder="Pokémon ara..."
-          type="search"
-        />
+        <PokemonSearchSelect onSelect={onClose} />
 
         {currentUser ? (
           <div className="flex items-center justify-between gap-3">

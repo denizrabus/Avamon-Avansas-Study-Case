@@ -1,0 +1,1 @@
+export { PokemonSearchSelect } from './PokemonSearchSelect'

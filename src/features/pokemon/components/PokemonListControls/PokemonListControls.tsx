@@ -7,6 +7,10 @@ import {
   type PokemonSortOption,
   type PokemonTypeName,
 } from '../../pokemon-types'
+import {
+  SelectInput,
+  type SelectInputOption,
+} from '../../../../shared/components/ui'
 
 interface PokemonListControlsProps {
   displayMode: PokemonDisplayMode
@@ -27,6 +31,16 @@ const sortOptions: Array<{
   { label: 'İsim: Z - A', value: 'name-desc' },
 ]
 
+type PokemonTypeFilterValue = PokemonTypeName | ''
+
+const typeOptions: Array<SelectInputOption<PokemonTypeFilterValue>> = [
+  { label: 'Tüm Türler', value: '' },
+  ...pokemonTypeNames.map((type) => ({
+    label: formatPokemonName(type),
+    value: type,
+  })),
+]
+
 export function PokemonListControls({
   displayMode,
   onDisplayModeChange,
@@ -37,40 +51,25 @@ export function PokemonListControls({
 }: PokemonListControlsProps) {
   return (
     <div className="grid gap-3 phone-lg:grid-cols-2 tablet:flex tablet:items-center">
-      <select
-        aria-label="Tür filtresi"
-        className="h-11 min-w-0 rounded-lg border border-line bg-surface px-4 text-sm font-bold text-ink shadow-sm outline-none focus:border-avamon-red focus:ring-2 focus:ring-avamon-red/20 tablet:min-w-40"
-        onChange={(event) =>
-          onTypeChange(
-            event.target.value === ''
-              ? null
-              : (event.target.value as PokemonTypeName)
-          )
-        }
+      <SelectInput
+        ariaLabel="Tür filtresi"
+        className="min-w-0 tablet:min-w-40"
+        onChange={(value) => onTypeChange(value ? value : null)}
+        options={typeOptions}
         value={typeFilter ?? ''}
-      >
-        <option value="">Tüm Türler</option>
-        {pokemonTypeNames.map((type) => (
-          <option key={type} value={type}>
-            {formatPokemonName(type)}
-          </option>
-        ))}
-      </select>
+      />
 
-      <select
-        aria-label="Sıralama"
-        className="h-11 min-w-0 rounded-lg border border-line bg-surface px-4 text-sm font-bold text-ink shadow-sm outline-none focus:border-avamon-red focus:ring-2 focus:ring-avamon-red/20 tablet:min-w-44"
-        onChange={(event) =>
-          onSortChange(event.target.value as PokemonSortOption)
-        }
+      <SelectInput
+        ariaLabel="Sıralama"
+        className="min-w-0 tablet:min-w-44"
+        onChange={(value) => {
+          if (value) {
+            onSortChange(value)
+          }
+        }}
+        options={sortOptions}
         value={sortOption}
-      >
-        {sortOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      />
 
       <div
         aria-label="Görünüm modu"

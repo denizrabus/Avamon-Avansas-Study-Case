@@ -22,8 +22,12 @@ describe('PokemonListControls', () => {
       />
     )
 
-    await user.selectOptions(screen.getByLabelText('Tür filtresi'), 'fire')
-    await user.selectOptions(screen.getByLabelText('Sıralama'), 'name-desc')
+    await user.click(screen.getByRole('combobox', { name: 'Tür filtresi' }))
+    await user.click(screen.getByText('Fire'))
+
+    await user.click(screen.getByRole('combobox', { name: 'Sıralama' }))
+    await user.click(screen.getByText('İsim: Z - A'))
+
     await user.click(screen.getByRole('button', { name: 'Liste görünüm' }))
 
     expect(handleTypeChange).toHaveBeenCalledWith('fire')

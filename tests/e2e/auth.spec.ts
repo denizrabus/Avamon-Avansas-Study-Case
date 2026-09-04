@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { mockPokemonDetailApi } from './mock-pokemon-detail-api'
+import { mockPokemonDetailApi } from './mocks/pokemon-api'
 
 async function expectAuthenticatedHeader(page: Page) {
   const mobileMenuButton = page.getByRole('button', { name: 'Menüyü aç' })

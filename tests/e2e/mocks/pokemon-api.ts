@@ -1,85 +1,125 @@
 import { type Page } from '@playwright/test'
 
-const emptyPixel =
-  'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA='
+import {
+  emptyPixel,
+  type PokemonListFixture,
+  pokemonDetailFixtures,
+  pokemonListFixtures,
+  statNames,
+} from './pokemon-fixtures'
 
-const pokemonById = new Map([
-  [
-    25,
-    {
-      abilities: [
-        { isHidden: false, name: 'static' },
-        { isHidden: true, name: 'lightning-rod' },
-      ],
-      baseExperience: 112,
-      height: 4,
-      id: 25,
-      name: 'pikachu',
-      speciesId: 25,
-      stats: [35, 55, 40, 50, 50, 90],
-      type: 'electric',
-      weight: 60,
-    },
-  ],
-  [
-    172,
-    {
-      abilities: [{ isHidden: false, name: 'static' }],
-      baseExperience: 41,
-      height: 3,
-      id: 172,
-      name: 'pichu',
-      speciesId: 172,
-      stats: [20, 40, 15, 35, 35, 60],
-      type: 'electric',
-      weight: 20,
-    },
-  ],
-  [
-    26,
-    {
-      abilities: [{ isHidden: false, name: 'static' }],
-      baseExperience: 243,
-      height: 8,
-      id: 26,
-      name: 'raichu',
-      speciesId: 26,
-      stats: [60, 90, 55, 90, 80, 110],
-      type: 'electric',
-      weight: 300,
-    },
-  ],
-])
+const defaultPokemonDetail = pokemonDetailFixtures[0]
 
-const pokemonNameToId = new Map(
-  Array.from(pokemonById.values()).map((pokemon) => [pokemon.name, pokemon.id])
+if (!defaultPokemonDetail) {
+  throw new Error('Default pokemon detail fixture is missing')
+}
+
+const pokemonDetailById = new Map(
+  pokemonDetailFixtures.map((pokemon) => [pokemon.id, pokemon])
 )
 
-const statNames = [
-  'hp',
-  'attack',
-  'defense',
-  'special-attack',
-  'special-defense',
-  'speed',
-]
+const pokemonDetailNameToId = new Map(
+  pokemonDetailFixtures.map((pokemon) => [pokemon.name, pokemon.id])
+)
 
-function getPokemonFixture(identifier: string) {
+function toPokemonResource(pokemon: PokemonListFixture) {
+  return {
+    name: pokemon.name,
+    url: `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`,
+  }
+}
+
+function getPokemonDetailFixture(identifier: string) {
   const parsedId = Number(identifier)
   const id = Number.isInteger(parsedId)
     ? parsedId
-    : pokemonNameToId.get(identifier)
+    : pokemonDetailNameToId.get(identifier)
 
-  return pokemonById.get(id ?? 25) ?? pokemonById.get(25)
+  return (
+    pokemonDetailById.get(id ?? defaultPokemonDetail.id) ??
+    defaultPokemonDetail
+  )
+}
+
+async function mockPokemonReferenceList(
+  page: Page,
+  fixtures: PokemonListFixture[]
+) {
+  await page.route(
+    'https://pokeapi.co/api/v2/pokemon?limit=2000&offset=0',
+    async (route) => {
+      await route.fulfill({
+        contentType: 'application/json',
+        json: {
+          count: fixtures.length,
+          results: fixtures.map(toPokemonResource),
+        },
+      })
+    }
+  )
+}
+
+export async function mockPokemonListApi(page: Page) {
+  await page.route('https://pokeapi.co/api/v2/type/fire', async (route) => {
+    await route.fulfill({
+      contentType: 'application/json',
+      json: {
+        pokemon: pokemonListFixtures
+          .filter((pokemon) => pokemon.type === 'fire')
+          .map((pokemon) => ({
+            pokemon: toPokemonResource(pokemon),
+          })),
+      },
+    })
+  })
+
+  await mockPokemonReferenceList(page, pokemonListFixtures)
+
+  await page.route(/https:\/\/pokeapi\.co\/api\/v2\/pokemon\/\d+\/?$/, async (
+    route
+  ) => {
+    const id = Number(route.request().url().match(/\/pokemon\/(\d+)\/?$/)?.[1])
+    const pokemon = pokemonListFixtures.find((item) => item.id === id)
+
+    if (!pokemon) {
+      await route.fulfill({ status: 404 })
+      return
+    }
+
+    await route.fulfill({
+      contentType: 'application/json',
+      json: {
+        id: pokemon.id,
+        name: pokemon.name,
+        sprites: {
+          front_default: emptyPixel,
+          other: {
+            'official-artwork': {
+              front_default: emptyPixel,
+            },
+          },
+        },
+        types: [
+          {
+            type: {
+              name: pokemon.type,
+            },
+          },
+        ],
+      },
+    })
+  })
 }
 
 export async function mockPokemonDetailApi(page: Page) {
+  await mockPokemonReferenceList(page, pokemonDetailFixtures)
+
   await page.route(/https:\/\/pokeapi\.co\/api\/v2\/pokemon\/[^/?]+\/?$/, async (
     route
   ) => {
     const identifier =
       route.request().url().match(/\/pokemon\/([^/?]+)\/?$/)?.[1] ?? 'pikachu'
-    const pokemon = getPokemonFixture(identifier)
+    const pokemon = getPokemonDetailFixture(identifier)
 
     await route.fulfill({
       contentType: 'application/json',

@@ -9,6 +9,7 @@ import { AppLogo } from '../AppLogo'
 import { useAppSelector } from '../../../../app/hooks'
 import { routes } from '../../../../app/routes'
 import { selectCurrentUser } from '../../../../features/auth/auth-selectors'
+import { PokemonSearchSelect } from '../../../../features/pokemon/components/PokemonSearchSelect'
 
 interface AppHeaderProps {
   onLogout: () => void
@@ -37,11 +38,7 @@ export function AppHeader({ onLogout }: AppHeaderProps) {
         </nav>
 
         <div className="hidden flex-1 tablet:block">
-          <input
-            className="h-9 w-full max-w-sm rounded-full border-2 border-white/35 bg-white/15 px-5 text-sm font-semibold text-white outline-none placeholder:text-white/75 focus:border-avamon-yellow"
-            placeholder="Pokémon ara..."
-            type="search"
-          />
+          <PokemonSearchSelect className="w-full max-w-sm" />
         </div>
 
         <AppHeaderDesktopActions
