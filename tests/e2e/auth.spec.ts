@@ -1,9 +1,31 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
+
+import { mockPokemonDetailApi } from './mock-pokemon-detail-api'
+
+async function expectAuthenticatedHeader(page: Page) {
+  const mobileMenuButton = page.getByRole('button', { name: 'Menüyü aç' })
+
+  if (await mobileMenuButton.isVisible()) {
+    await mobileMenuButton.click()
+
+    await expect(
+      page
+        .getByRole('region', { name: 'Mobil menü' })
+        .getByRole('button', { name: 'Çıkış' })
+    ).toBeVisible()
+
+    return
+  }
+
+  await expect(page.getByRole('button', { name: 'Çıkış' })).toBeVisible()
+}
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.clear()
   })
+
+  await mockPokemonDetailApi(page)
 })
 
 test('logs in with a demo user', async ({ page }) => {
@@ -17,7 +39,7 @@ test('logs in with a demo user', async ({ page }) => {
   await page.locator('main').getByRole('button', { name: 'Giriş Yap' }).click()
 
   await expect(page).toHaveURL('/')
-  await expect(page.getByRole('button', { name: 'Çıkış' })).toBeVisible()
+  await expectAuthenticatedHeader(page)
 
   const storedSession = await page.evaluate(() =>
     window.localStorage.getItem('avamon.auth-session')
@@ -38,6 +60,9 @@ test('redirects visitors from protected pokemon detail to login', async ({
 
   await expect(page).toHaveURL('/pokemon/pikachu')
   await expect(
-    page.getByRole('heading', { name: 'pikachu' })
+    page.getByRole('heading', { name: 'Pikachu' })
+  ).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'TEMEL İSTATİSTİKLER' })
   ).toBeVisible()
 })

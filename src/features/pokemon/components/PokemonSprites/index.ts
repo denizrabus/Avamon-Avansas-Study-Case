@@ -1,0 +1,1 @@
+export { PokemonSprites } from './PokemonSprites'

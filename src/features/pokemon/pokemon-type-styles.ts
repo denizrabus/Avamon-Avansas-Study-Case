@@ -25,7 +25,7 @@ export const pokemonTypeBadgeClasses: Record<PokemonTypeName, string> = {
   bug: 'bg-type-bug text-white',
   dark: 'bg-type-dark text-white',
   dragon: 'bg-type-dragon text-white',
-  electric: 'bg-type-electric text-ink',
+  electric: 'bg-type-electric text-white',
   fairy: 'bg-type-fairy text-white',
   fighting: 'bg-type-fighting text-white',
   fire: 'bg-type-fire text-white',
@@ -33,13 +33,51 @@ export const pokemonTypeBadgeClasses: Record<PokemonTypeName, string> = {
   ghost: 'bg-type-ghost text-white',
   grass: 'bg-type-grass text-white',
   ground: 'bg-type-ground text-white',
-  ice: 'bg-type-ice text-ink',
+  ice: 'bg-type-ice text-white',
   normal: 'bg-type-normal text-white',
   poison: 'bg-type-poison text-white',
   psychic: 'bg-type-psychic text-white',
   rock: 'bg-type-rock text-white',
   steel: 'bg-type-steel text-white',
   water: 'bg-type-water text-white',
+}
+
+export const pokemonTypeDetailHeroBackgroundClasses: Record<
+  PokemonTypeName,
+  string
+> = {
+  bug: 'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-bug-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-bug-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  dark:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-dark-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-dark-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  dragon:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-dragon-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-dragon-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  electric:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-electric-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-electric-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  fairy:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-fairy-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-fairy-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  fighting:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-fighting-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-fighting-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  fire: 'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-fire-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-fire-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  flying:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-flying-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-flying-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  ghost:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-ghost-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-ghost-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  grass:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-grass-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-grass-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  ground:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-ground-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-ground-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  ice: 'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-ice-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-ice-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  normal:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-normal-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-normal-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  poison:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-poison-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-poison-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  psychic:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-psychic-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-psychic-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  rock: 'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-rock-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-rock-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  steel:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-steel-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-steel-soft)_0%,rgb(255_255_255_/_0)_74%)]',
+  water:
+    'bg-surface bg-[radial-gradient(ellipse_18rem_13rem_at_50%_38%,var(--color-type-water-soft)_0%,rgb(255_255_255_/_0)_74%)] tablet:bg-[radial-gradient(ellipse_24rem_18rem_at_18%_42%,var(--color-type-water-soft)_0%,rgb(255_255_255_/_0)_74%)]',
 }
 
 export const pokemonTypeCardGradientClasses: Record<PokemonTypeName, string> = {

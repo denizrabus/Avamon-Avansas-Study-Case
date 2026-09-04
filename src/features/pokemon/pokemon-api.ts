@@ -3,8 +3,12 @@ import {
   parsePokemonIdFromUrl,
 } from './pokemon-list-utils'
 import {
+  type PokemonDetail,
+  type PokemonEvolution,
   type PokemonReference,
   type PokemonReferenceCollection,
+  type PokemonSprite,
+  type PokemonStat,
   type PokemonSummary,
   type PokemonTypeName,
 } from './pokemon-types'
@@ -31,10 +35,20 @@ interface PokemonTypeResponse {
 }
 
 interface PokemonDetailResponse {
+  abilities: Array<{
+    ability: NamedApiResource
+    is_hidden: boolean
+  }>
+  base_experience: number | null
+  height: number
   id: number
   name: string
+  species: NamedApiResource
   sprites: {
+    back_default?: string | null
+    back_shiny?: string | null
     front_default?: string | null
+    front_shiny?: string | null
     other?: {
       home?: {
         front_default?: string | null
@@ -44,11 +58,39 @@ interface PokemonDetailResponse {
       }
     }
   }
+  stats: Array<{
+    base_stat: number
+    stat: {
+      name: string
+    }
+  }>
   types: Array<{
     type: {
       name: string
     }
   }>
+  weight: number
+}
+
+interface PokemonSpeciesResponse {
+  evolution_chain: {
+    url: string
+  }
+  flavor_text_entries: Array<{
+    flavor_text: string
+    language: {
+      name: string
+    }
+  }>
+}
+
+interface PokemonEvolutionChainResponse {
+  chain: PokemonEvolutionChainNode
+}
+
+interface PokemonEvolutionChainNode {
+  evolves_to: PokemonEvolutionChainNode[]
+  species: NamedApiResource
 }
 
 async function fetchJson<TResponse>(url: string): Promise<TResponse> {
@@ -92,6 +134,102 @@ function toPokemonSummary(response: PokemonDetailResponse): PokemonSummary {
   }
 }
 
+function getPokemonArtworkUrl(id: number) {
+  return `${officialArtworkBaseUrl}/${id}.png`
+}
+
+function parsePokemonSpeciesIdFromUrl(url: string) {
+  const id = Number(url.match(/\/pokemon-species\/(\d+)\/?$/)?.[1])
+
+  return Number.isInteger(id) && id > 0 ? id : null
+}
+
+function formatDescription(description: string) {
+  return description.replace(/\s+/g, ' ').trim()
+}
+
+function toPokemonDescription(response: PokemonSpeciesResponse) {
+  const englishDescription = response.flavor_text_entries.find(
+    (entry) => entry.language.name === 'en'
+  )
+
+  return englishDescription
+    ? formatDescription(englishDescription.flavor_text)
+    : 'No description is available for this Pokemon.'
+}
+
+const statLabels: Record<string, string> = {
+  attack: 'Atk',
+  defense: 'Def',
+  hp: 'HP',
+  'special-attack': 'Sp.Atk',
+  'special-defense': 'Sp.Def',
+  speed: 'Hız',
+}
+
+function toPokemonStats(response: PokemonDetailResponse): PokemonStat[] {
+  return response.stats.map((stat) => ({
+    label: statLabels[stat.stat.name] ?? stat.stat.name,
+    name: stat.stat.name,
+    value: stat.base_stat,
+  }))
+}
+
+function toPokemonSprites(response: PokemonDetailResponse): PokemonSprite[] {
+  const sprites = [
+    { imageUrl: response.sprites.front_default, label: 'Ön' },
+    { imageUrl: response.sprites.back_default, label: 'Arka' },
+    { imageUrl: response.sprites.front_shiny, label: 'Parlak Ön' },
+    { imageUrl: response.sprites.back_shiny, label: 'Parlak Arka' },
+  ]
+
+  return sprites.flatMap((sprite) =>
+    sprite.imageUrl ? [{ imageUrl: sprite.imageUrl, label: sprite.label }] : []
+  )
+}
+
+function collectEvolutionChain(
+  node: PokemonEvolutionChainNode,
+  evolutions: PokemonEvolution[] = []
+) {
+  const id = parsePokemonSpeciesIdFromUrl(node.species.url)
+
+  if (id) {
+    evolutions.push({
+      id,
+      imageUrl: getPokemonArtworkUrl(id),
+      name: node.species.name,
+    })
+  }
+
+  node.evolves_to.forEach((evolutionNode) => {
+    collectEvolutionChain(evolutionNode, evolutions)
+  })
+
+  return evolutions
+}
+
+function toPokemonDetail(
+  pokemon: PokemonDetailResponse,
+  species: PokemonSpeciesResponse,
+  evolutionChain: PokemonEvolutionChainResponse
+): PokemonDetail {
+  return {
+    ...toPokemonSummary(pokemon),
+    abilities: pokemon.abilities.map((ability) => ({
+      isHidden: ability.is_hidden,
+      name: ability.ability.name,
+    })),
+    baseExperience: pokemon.base_experience,
+    description: toPokemonDescription(species),
+    evolutionChain: collectEvolutionChain(evolutionChain.chain),
+    heightInMeters: pokemon.height / 10,
+    sprites: toPokemonSprites(pokemon),
+    stats: toPokemonStats(pokemon),
+    weightInKilograms: pokemon.weight / 10,
+  }
+}
+
 export async function fetchPokemonReferences(): Promise<PokemonReferenceCollection> {
   const response = await fetchJson<PokemonListResponse>(
     `${pokemonApiBaseUrl}/pokemon?limit=${pokemonListLimit}&offset=0`
@@ -130,7 +268,7 @@ export async function fetchPokemonReferencesByType(
 
 export async function fetchPokemonSummary(idOrName: number | string) {
   const response = await fetchJson<PokemonDetailResponse>(
-    `${pokemonApiBaseUrl}/pokemon/${idOrName}`
+    `${pokemonApiBaseUrl}/pokemon/${encodeURIComponent(String(idOrName).toLowerCase())}`
   )
 
   return toPokemonSummary(response)
@@ -140,4 +278,18 @@ export async function fetchPokemonSummaries(references: PokemonReference[]) {
   return Promise.all(
     references.map((reference) => fetchPokemonSummary(reference.id))
   )
+}
+
+export async function fetchPokemonDetail(
+  idOrName: number | string
+): Promise<PokemonDetail> {
+  const pokemon = await fetchJson<PokemonDetailResponse>(
+    `${pokemonApiBaseUrl}/pokemon/${encodeURIComponent(String(idOrName).toLowerCase())}`
+  )
+  const species = await fetchJson<PokemonSpeciesResponse>(pokemon.species.url)
+  const evolutionChain = await fetchJson<PokemonEvolutionChainResponse>(
+    species.evolution_chain.url
+  )
+
+  return toPokemonDetail(pokemon, species, evolutionChain)
 }

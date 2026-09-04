@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
@@ -46,6 +46,27 @@ describe('AppHeader', () => {
       '/login'
     )
     expect(screen.getByPlaceholderText('Pokémon ara...')).toBeVisible()
+  })
+
+  it('opens mobile menu with visitor actions', async () => {
+    const user = userEvent.setup()
+
+    renderHeader()
+
+    expect(
+      screen.queryByRole('region', { name: 'Mobil menü' })
+    ).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Menüyü aç' }))
+
+    const mobileMenu = screen.getByRole('region', { name: 'Mobil menü' })
+
+    expect(
+      within(mobileMenu).getByRole('link', { name: 'Tüm Pokémonlar' })
+    ).toHaveAttribute('href', '/pokemon')
+    expect(within(mobileMenu).getByPlaceholderText('Pokémon ara...')).toBeVisible()
+    expect(within(mobileMenu).getByRole('link', { name: 'Giriş Yap' }))
+      .toHaveAttribute('href', '/login')
   })
 
   it('renders current user and calls logout', async () => {

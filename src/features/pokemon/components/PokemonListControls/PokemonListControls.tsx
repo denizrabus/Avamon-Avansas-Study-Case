@@ -36,10 +36,10 @@ export function PokemonListControls({
   typeFilter,
 }: PokemonListControlsProps) {
   return (
-    <div className="flex flex-col gap-3 tablet:flex-row tablet:items-center">
+    <div className="grid gap-3 phone-lg:grid-cols-2 tablet:flex tablet:items-center">
       <select
         aria-label="Tür filtresi"
-        className="h-11 rounded-lg border border-line bg-surface px-4 text-sm font-bold text-ink shadow-sm outline-none focus:border-avamon-red focus:ring-2 focus:ring-avamon-red/20"
+        className="h-11 min-w-0 rounded-lg border border-line bg-surface px-4 text-sm font-bold text-ink shadow-sm outline-none focus:border-avamon-red focus:ring-2 focus:ring-avamon-red/20 tablet:min-w-40"
         onChange={(event) =>
           onTypeChange(
             event.target.value === ''
@@ -59,7 +59,7 @@ export function PokemonListControls({
 
       <select
         aria-label="Sıralama"
-        className="h-11 rounded-lg border border-line bg-surface px-4 text-sm font-bold text-ink shadow-sm outline-none focus:border-avamon-red focus:ring-2 focus:ring-avamon-red/20"
+        className="h-11 min-w-0 rounded-lg border border-line bg-surface px-4 text-sm font-bold text-ink shadow-sm outline-none focus:border-avamon-red focus:ring-2 focus:ring-avamon-red/20 tablet:min-w-44"
         onChange={(event) =>
           onSortChange(event.target.value as PokemonSortOption)
         }
@@ -74,7 +74,7 @@ export function PokemonListControls({
 
       <div
         aria-label="Görünüm modu"
-        className="inline-flex h-11 w-fit overflow-hidden rounded-lg border border-line bg-surface shadow-sm"
+        className="inline-flex h-11 w-fit overflow-hidden rounded-lg border border-line bg-surface shadow-sm justify-self-end phone-lg:col-span-2 tablet:col-span-1"
         role="group"
       >
         <button

@@ -19,7 +19,7 @@ export function PokemonCard({ pokemon, priority = false }: PokemonCardProps) {
 
   return (
     <Link
-      className="group flex h-full min-h-[20rem] flex-col overflow-hidden rounded-card bg-surface shadow-card transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-avamon-red"
+      className="group flex h-full min-h-64 flex-col overflow-hidden rounded-card bg-surface shadow-card transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-avamon-red desktop:min-h-[20rem]"
       to={`/pokemon/${pokemon.name}`}
     >
       <div className="flex aspect-[4/3] shrink-0 items-center justify-center bg-gradient-to-b from-white to-[#f6f6f6]">
@@ -27,19 +27,19 @@ export function PokemonCard({ pokemon, priority = false }: PokemonCardProps) {
           alt={formatPokemonName(pokemon.name)}
           className="h-full w-full"
           fallbackClassName="desktop:size-18 wide:size-24"
-          imageClassName="h-full max-h-56 w-full object-contain p-7 transition group-hover:scale-105 desktop:p-6 wide:p-8"
+          imageClassName="h-full max-h-56 w-full object-contain p-4 transition group-hover:scale-105 tablet:p-5 desktop:p-6 wide:p-8"
           priority={priority}
           src={pokemon.imageUrl}
         />
       </div>
 
       <div
-        className={`flex min-h-32 flex-1 flex-col items-center bg-gradient-to-r px-5 py-4 text-center ${pokemonTypeCardGradientClasses[primaryType]}`}
+        className={`flex min-h-28 flex-1 flex-col items-center bg-gradient-to-r px-3 py-3 text-center desktop:min-h-32 desktop:px-5 desktop:py-4 ${pokemonTypeCardGradientClasses[primaryType]}`}
       >
         <p className="text-sm font-black text-muted">
           {formatPokemonNumber(pokemon.id)}
         </p>
-        <h2 className="mt-1 grid min-h-14 place-items-center text-lg font-black leading-tight text-ink">
+        <h2 className="mt-1 grid min-h-12 place-items-center text-base font-black leading-tight text-ink desktop:min-h-14 desktop:text-lg">
           <span className="overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
             {formatPokemonName(pokemon.name)}
           </span>

@@ -133,12 +133,14 @@ export function PokemonListPage() {
   const isError = referencesQuery.isError || summariesQuery.isError
 
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-page-bg px-6 py-12">
-      <section className="mx-auto max-w-page">
+    <main className="min-h-[calc(100vh-4rem)] bg-page-bg py-8 tablet:py-12">
+      <section className="mx-auto max-w-page px-6">
         <div className="flex flex-col gap-5 tablet:flex-row tablet:items-center tablet:justify-between">
-          <div className="flex items-end gap-4">
-            <h1 className="text-4xl font-bold text-ink">Tüm Pokémon</h1>
-            <p className="pb-1 text-base text-muted">
+          <div className="flex items-start justify-between gap-4 tablet:items-end tablet:justify-start">
+            <h1 className="text-3xl font-bold leading-tight text-ink tablet:text-4xl">
+              Tüm Pokémon
+            </h1>
+            <p className="shrink-0 pt-2 text-sm text-muted tablet:pb-1 tablet:pt-0 tablet:text-base">
               {formatPokemonCount(referencesQuery.data?.count ?? 1302)} pokémon
             </p>
           </div>
@@ -164,10 +166,10 @@ export function PokemonListPage() {
 
         {isLoading ? (
           displayMode === 'grid' ? (
-            <div className="mt-8 grid gap-5 tablet:grid-cols-3 desktop:grid-cols-6">
+            <div className="mt-8 grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-6">
               {Array.from({ length: itemsPerPage }, (_, index) => (
                 <div
-                  className="h-80 animate-pulse overflow-hidden rounded-card bg-surface shadow-card"
+                  className="h-64 animate-pulse overflow-hidden rounded-card bg-surface shadow-card desktop:h-80"
                   key={index}
                 >
                   <div className="h-48 bg-gradient-to-b from-white to-[#f6f6f6]" />
@@ -198,7 +200,7 @@ export function PokemonListPage() {
         {!isLoading && !isError && summariesQuery.data ? (
           <>
             {displayMode === 'grid' ? (
-              <div className="mt-8 grid gap-5 phone-lg:grid-cols-2 tablet:grid-cols-3 desktop:grid-cols-6">
+              <div className="mt-8 grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-6">
                 {summariesQuery.data.map((pokemon, index) => (
                   <PokemonCard
                     key={pokemon.id}

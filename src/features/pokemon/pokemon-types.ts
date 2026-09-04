@@ -42,6 +42,39 @@ export interface PokemonSummary {
   types: PokemonTypeName[]
 }
 
+export interface PokemonAbility {
+  isHidden: boolean
+  name: string
+}
+
+export interface PokemonEvolution {
+  id: number
+  imageUrl: string
+  name: string
+}
+
+export interface PokemonSprite {
+  imageUrl: string
+  label: string
+}
+
+export interface PokemonStat {
+  label: string
+  name: string
+  value: number
+}
+
+export interface PokemonDetail extends PokemonSummary {
+  abilities: PokemonAbility[]
+  baseExperience: number | null
+  description: string
+  evolutionChain: PokemonEvolution[]
+  heightInMeters: number
+  sprites: PokemonSprite[]
+  stats: PokemonStat[]
+  weightInKilograms: number
+}
+
 export interface PokemonReferenceCollection {
   count: number
   results: PokemonReference[]

@@ -86,3 +86,24 @@ textarea {
 a {
   text-decoration: none;
 }
+
+.pokemon-stat-progress {
+  appearance: none;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.pokemon-stat-progress::-webkit-progress-bar {
+  border-radius: 999px;
+  background: var(--color-line);
+}
+
+.pokemon-stat-progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.pokemon-stat-progress::-moz-progress-bar {
+  border-radius: 999px;
+  background: currentColor;
+}
