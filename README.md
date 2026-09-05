@@ -18,7 +18,6 @@ The application uses [PokeAPI](https://pokeapi.co/) as the remote data source an
 - React Select
 - Vitest
 - React Testing Library
-- MSW
 - Playwright
 
 ## Getting Started

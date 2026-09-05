@@ -27,7 +27,6 @@ This file is the canonical rule set for AI-assisted work in this repository. Any
 - React Select
 - Vitest
 - React Testing Library
-- MSW
 - Playwright
 
 ## Source Layout
@@ -161,7 +160,7 @@ ComponentName/
   - component behavior
   - reusable UI components
 - Use React Testing Library for user-visible behavior.
-- Use MSW for component/integration tests that need API mocks.
+- Use `vi.mock` to stub query hooks in component/integration tests that need API data.
 - Use Playwright for critical end-to-end user journeys.
 - Prefer role, label, and visible text queries over implementation details.
 - New reusable UI components should include focused component tests before or alongside implementation.

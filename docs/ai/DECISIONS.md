@@ -364,8 +364,8 @@ The project uses a layered testing strategy:
 
 - Vitest for utilities, schemas, Redux slices, and component behavior.
 - React Testing Library for user-facing component assertions.
-- MSW for component/integration API mocks.
-- Playwright for critical end-to-end flows.
+- `vi.mock` to stub query hooks in component tests that need API data, instead of a network-mocking library.
+- Playwright for critical end-to-end flows, using `page.route` to mock network requests.
 
 Playwright covers:
 
@@ -401,3 +401,14 @@ Reasoning:
 Trade-off:
 
 - No explicit focus management or `aria-live` announcement was added for screen reader users; the scroll is a visual affordance only. This was scoped out to keep the change small, but is a reasonable follow-up if accessibility auditing becomes a priority.
+
+## 2026-09-06 - Removed Unused Dependencies
+
+`@headlessui/react` and `msw` were listed in `package.json` but had zero imports anywhere in `src` or `tests`. `@headlessui/react` was never adopted (React Select and native elements cover every interactive control). `msw` was an earlier plan for API mocking that was superseded by simpler approaches: component tests stub query hooks directly with `vi.mock`, and Playwright tests mock network calls with `page.route`.
+
+Both packages were removed from `package.json`, and every doc that listed MSW as part of the stack (`README.md`, `AGENTS.md`, `docs/TESTING.md`, and the earlier Testing Strategy entry in this file) was corrected to describe the mocking approach actually in use.
+
+Reasoning:
+
+- Unused dependencies add install time and bundle-audit noise without providing value.
+- Documentation should describe the testing approach that is actually implemented, not a plan that was replaced during development.

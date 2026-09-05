@@ -6,8 +6,8 @@ Avamon uses a layered testing strategy.
 
 - Vitest for unit and component tests
 - React Testing Library for user-facing component behavior
-- MSW for API mocking
-- Playwright for end-to-end browser flows
+- `vi.mock` to stub query hooks in component tests that need API data
+- Playwright for end-to-end browser flows, with `page.route` mocking network requests
 
 ## Vitest Scope
 
