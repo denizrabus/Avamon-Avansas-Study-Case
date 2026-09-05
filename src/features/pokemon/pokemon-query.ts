@@ -17,7 +17,7 @@ export const pokemonQueryKeys = {
     [...pokemonQueryKeys.all, 'detail', idOrName] as const,
   references: (type: PokemonTypeName | null) =>
     [...pokemonQueryKeys.all, 'references', type ?? 'all'] as const,
-  summaries: (references: PokemonReference[]) =>
+  summaries: (references: Array<Pick<PokemonReference, 'id'>>) =>
     [
       ...pokemonQueryKeys.all,
       'summaries',
@@ -33,7 +33,9 @@ export function usePokemonReferencesQuery(type: PokemonTypeName | null) {
   })
 }
 
-export function usePokemonSummariesQuery(references: PokemonReference[]) {
+export function usePokemonSummariesQuery(
+  references: Array<Pick<PokemonReference, 'id'>>
+) {
   return useQuery({
     enabled: references.length > 0,
     queryFn: () => fetchPokemonSummaries(references),

@@ -1,42 +1,14 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { LoginForm } from './LoginForm'
 
 function renderLoginForm(props: Parameters<typeof LoginForm>[0]) {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  })
-
-  render(
-    <QueryClientProvider client={queryClient}>
-      <LoginForm {...props} />
-    </QueryClientProvider>
-  )
+  render(<LoginForm {...props} />)
 }
 
 describe('LoginForm', () => {
-  beforeEach(() => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        json: () =>
-          Promise.resolve({
-            sprites: {
-              front_default: 'https://example.com/pikachu.png',
-            },
-          }),
-        ok: true,
-      })
-    )
-  })
-
   it('shows required field messages after empty submit', async () => {
     const user = userEvent.setup()
 

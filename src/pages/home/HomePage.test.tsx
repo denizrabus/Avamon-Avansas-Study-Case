@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { HomePage } from './HomePage'
-import { appReducer } from '../../app/app-slice'
 import { authReducer } from '../../features/auth/auth-slice'
 import { pokemonPreferencesReducer } from '../../features/pokemon/pokemon-preferences-slice'
 import {
@@ -84,7 +83,7 @@ vi.mock('../../features/pokemon/pokemon-query', () => ({
     isError: false,
     isLoading: false,
   }),
-  usePokemonSummariesQuery: (references: PokemonReference[]) => ({
+  usePokemonSummariesQuery: (references: Array<Pick<PokemonReference, 'id'>>) => ({
     data: references.flatMap((reference) => {
       const pokemon = pokemonQueryMocks.summariesById.get(reference.id)
 
@@ -97,12 +96,12 @@ vi.mock('../../features/pokemon/pokemon-query', () => ({
 
 interface RenderHomePageOptions {
   isAuthenticated?: boolean
-  recentlyVisitedPokemon?: PokemonSummary[]
+  recentlyVisitedIds?: number[]
 }
 
 function renderHomePage({
   isAuthenticated = false,
-  recentlyVisitedPokemon = [],
+  recentlyVisitedIds = [],
 }: RenderHomePageOptions = {}) {
   const store = configureStore({
     preloadedState: {
@@ -121,11 +120,10 @@ function renderHomePage({
           },
       pokemonPreferences: {
         displayMode: 'grid' as const,
-        recentlyVisited: recentlyVisitedPokemon,
+        recentlyVisitedIds,
       },
     },
     reducer: {
-      app: appReducer,
       auth: authReducer,
       pokemonPreferences: pokemonPreferencesReducer,
     },
@@ -175,15 +173,11 @@ describe('HomePage', () => {
   })
 
   it('shows recently visited pokemon after three detail page visits', () => {
-    const recentlyVisitedPokemon = [
-      pokemonQueryMocks.summariesById.get(25),
-      pokemonQueryMocks.summariesById.get(4),
-      pokemonQueryMocks.summariesById.get(1),
-    ].flatMap((pokemon) => (pokemon ? [pokemon] : []))
+    const recentlyVisitedIds = [25, 4, 1]
 
     vi.spyOn(Math, 'random').mockReturnValue(0)
 
-    renderHomePage({ recentlyVisitedPokemon })
+    renderHomePage({ recentlyVisitedIds })
 
     expect(screen.getByRole('heading', { name: 'Recently Visited' }))
       .toBeVisible()

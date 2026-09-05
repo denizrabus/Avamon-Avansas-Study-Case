@@ -17,7 +17,6 @@ import {
   sortPokemonReferences,
 } from '../../features/pokemon/pokemon-list-utils'
 import { displayModeChanged } from '../../features/pokemon/pokemon-preferences-slice'
-import { savePokemonDisplayMode } from '../../features/pokemon/pokemon-preferences-storage'
 import { usePokemonReferencesQuery, usePokemonSummariesQuery } from '../../features/pokemon/pokemon-query'
 import { selectPokemonDisplayMode } from '../../features/pokemon/pokemon-selectors'
 import {
@@ -117,7 +116,6 @@ export function PokemonListPage() {
   }
 
   function handleDisplayModeChange(nextDisplayMode: PokemonDisplayMode) {
-    savePokemonDisplayMode(nextDisplayMode)
     dispatch(displayModeChanged(nextDisplayMode))
   }
 

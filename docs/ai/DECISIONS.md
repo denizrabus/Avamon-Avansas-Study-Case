@@ -326,6 +326,38 @@ Trade-off:
 
 - The new projects check that critical content renders and is reachable at each width, not pixel-level layout correctness. Manual QA is still the way visual layout is verified at each width.
 
+## 2026-09-05 - Recently Visited Stores Ids, Not Full Summaries
+
+`pokemonPreferences.recentlyVisitedIds` now stores `number[]` instead of full `PokemonSummary[]` objects. `HomePage` resolves the displayed cards through `usePokemonSummariesQuery(recentlyVisitedIds.map((id) => ({ id })))`, the same TanStack Query hook already used for the list page and the "Popular Pokémon" section.
+
+Reasoning:
+
+- Storing full summaries (image URL, name, types) in Redux/localStorage duplicated data that TanStack Query already owns and caches, and drifted from this project's own rule that remote PokeAPI data must not be stored in Redux.
+- `fetchPokemonSummaries`/`usePokemonSummariesQuery`/`pokemonQueryKeys.summaries` only ever used `reference.id` internally, so narrowing their parameter type to `Array<Pick<PokemonReference, 'id'>>` was a safe, low-cost change that made the existing list-page usage and the new id-only usage both type-check without fabricating placeholder `name`/`url` values.
+- `Promise.all` in `fetchPokemonSummaries` resolves in input order, so passing `recentlyVisitedIds` (already most-recent-first from `getNextRecentlyVisitedIds`) preserves the expected display order with no extra sorting.
+
+Trade-off:
+
+- The "Recently Visited" section now has a real loading/error state on first render (a `usePokemonSummariesQuery` call, sharing the existing `HomePopularSkeleton` and error UI) instead of rendering already-available Redux data synchronously. This only matters for the brief window before that query resolves.
+- Older `avamon.pokemon-preferences` localStorage payloads (the previous `recentlyVisited: PokemonSummary[]` shape) are silently ignored by the new loader rather than migrated, since this is a case-study demo with no real user data to preserve.
+
+## 2026-09-05 - Centralized LocalStorage Sync With A Listener Middleware
+
+Local storage writes for auth session, display mode, and recently visited ids used to be paired manually at each call site: `LoginPage` called `saveAuthSession` next to `dispatch(loginSucceeded(...))`, `AppLayout`'s logout handler called `clearAuthSession` next to `dispatch(logout())`, `PokemonListPage` called `savePokemonDisplayMode` next to `dispatch(displayModeChanged(...))`, and `PokemonDetailPage` called `saveRecentlyVisitedPokemonIds` next to `dispatch(recentlyVisitedIdsChanged(...))`.
+
+`src/app/persistence-listener.ts` now uses Redux Toolkit's built-in `createListenerMiddleware` (no new dependency) to listen for `loginSucceeded`, `logout`, `displayModeChanged`, and `recentlyVisitedIdsChanged`, and performs the matching storage write/clear in one place. `store.ts` prepends `persistenceListenerMiddleware.middleware`. All four call sites now only dispatch; none of them import a storage function anymore.
+
+Reasoning:
+
+- The manual pairing was easy to forget at a new call site: a component that dispatched one of these actions without also calling the matching storage function would silently stop persisting, with no error or test failure pointing at the cause.
+- Centralizing persistence in a middleware makes it a cross-cutting concern instead of a responsibility every dispatching component has to remember, and keeps reducers pure (state updates) separate from side effects (storage writes).
+- `createListenerMiddleware` is already part of `@reduxjs/toolkit`, so this added no new dependency.
+
+Trade-off:
+
+- Storage writes are now one step removed from the dispatching component, so tracing "who persists this" means checking `persistence-listener.ts` rather than the component itself. This is an acceptable trade for removing the duplicated, easy-to-forget pairing.
+- The initial state hydration (`loadAuthSession`, `loadPokemonDisplayMode`, `loadRecentlyVisitedPokemonIds` read at slice/module init time) is intentionally left as-is; the middleware only owns writes, not the initial read.
+
 ## 2026-09-05 - Testing Strategy
 
 The project uses a layered testing strategy:

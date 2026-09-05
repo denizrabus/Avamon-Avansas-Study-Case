@@ -200,10 +200,12 @@ This protects the card, row, autocomplete, and detail layouts from broken or mis
 Redux Toolkit is used for deterministic client/application state:
 
 - authenticated user session
-- recently visited Pokémon
+- recently visited Pokémon ids
 - persisted list display mode
 
-Remote PokeAPI data is intentionally not stored in Redux.
+Remote PokeAPI data is intentionally not stored in Redux. `recentlyVisitedIds` stores only Pokémon ids; `HomePage` resolves the cards to display through the same `usePokemonSummariesQuery` hook the list page uses, so the actual Pokémon data stays owned by TanStack Query.
+
+Local storage writes for these three pieces of state are centralized in `src/app/persistence-listener.ts` using Redux Toolkit's `createListenerMiddleware`. Components only dispatch actions (`loginSucceeded`, `logout`, `displayModeChanged`, `recentlyVisitedIdsChanged`); the listener middleware performs the matching storage write. This replaced a previous pattern where each component paired a storage call next to its dispatch call by hand.
 
 ### Server State
 
@@ -239,9 +241,10 @@ React Select is used through the shared `SelectInput` wrapper. The wrapper keeps
 ## Persistence
 
 - Auth session is stored in local storage.
-- Recently visited Pokémon are stored in Redux and local storage.
+- Recently visited Pokémon ids are stored in Redux and local storage; the Pokémon data itself is fetched and cached by TanStack Query.
 - Display mode is stored in Redux and local storage.
 - Page, type filter, and sort order are stored in URL search params so the list page survives refresh and can be shared.
+- All local storage writes go through the `createListenerMiddleware`-based listener in `src/app/persistence-listener.ts`, not through the dispatching components.
 
 ## Submission Checklist
 

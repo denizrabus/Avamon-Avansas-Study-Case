@@ -9,12 +9,13 @@ import {
   usePokemonReferencesQuery,
   usePokemonSummariesQuery,
 } from '../../features/pokemon/pokemon-query'
-import { selectRecentlyVisitedPokemon } from '../../features/pokemon/pokemon-selectors'
+import { selectRecentlyVisitedPokemonIds } from '../../features/pokemon/pokemon-selectors'
 import { selectIsAuthenticated } from '../../features/auth/auth-selectors'
 import { ButtonLink } from '../../shared/components/ui'
 import { getRandomPokemonReferences } from './home-page-utils'
 
 const heroPokemonId = 6
+const minRecentlyVisitedPokemon = 3
 
 function HomePopularSkeleton() {
   return (
@@ -34,8 +35,9 @@ function HomePopularSkeleton() {
 
 export function HomePage() {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
-  const recentlyVisitedPokemon = useAppSelector(selectRecentlyVisitedPokemon)
-  const shouldShowRecentlyVisited = recentlyVisitedPokemon.length >= 3
+  const recentlyVisitedIds = useAppSelector(selectRecentlyVisitedPokemonIds)
+  const shouldShowRecentlyVisited =
+    recentlyVisitedIds.length >= minRecentlyVisitedPokemon
   const referencesQuery = usePokemonReferencesQuery(null)
   const randomPopularReferences = useMemo(
     () =>
@@ -47,20 +49,27 @@ export function HomePage() {
         : [],
     [referencesQuery.data]
   )
+  const recentlyVisitedReferences = useMemo(
+    () => recentlyVisitedIds.map((id) => ({ id })),
+    [recentlyVisitedIds]
+  )
   const popularPokemonQuery = usePokemonSummariesQuery(
     shouldShowRecentlyVisited ? [] : randomPopularReferences
+  )
+  const recentlyVisitedQuery = usePokemonSummariesQuery(
+    shouldShowRecentlyVisited ? recentlyVisitedReferences : []
   )
   const featuredSectionTitle = shouldShowRecentlyVisited
     ? 'Recently Visited'
     : 'Popular Pokémon'
   const featuredPokemon = shouldShowRecentlyVisited
-    ? recentlyVisitedPokemon
+    ? recentlyVisitedQuery.data ?? []
     : popularPokemonQuery.data ?? []
   const isFeaturedPokemonLoading = shouldShowRecentlyVisited
-    ? false
+    ? recentlyVisitedQuery.isLoading
     : referencesQuery.isLoading || popularPokemonQuery.isLoading
   const isFeaturedPokemonError = shouldShowRecentlyVisited
-    ? false
+    ? recentlyVisitedQuery.isError
     : referencesQuery.isError || popularPokemonQuery.isError
 
   return (

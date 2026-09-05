@@ -74,7 +74,9 @@ export async function fetchPokemonSummary(idOrName: number | string) {
   return toPokemonSummary(response)
 }
 
-export async function fetchPokemonSummaries(references: PokemonReference[]) {
+export async function fetchPokemonSummaries(
+  references: Array<Pick<PokemonReference, 'id'>>
+) {
   return Promise.all(
     references.map((reference) => fetchPokemonSummary(reference.id))
   )

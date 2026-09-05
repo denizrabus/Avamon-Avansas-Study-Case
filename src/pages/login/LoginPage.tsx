@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 import { routes } from '../../app/routes'
 import { loginSucceeded } from '../../features/auth/auth-slice'
-import { saveAuthSession } from '../../features/auth/auth-storage'
 import { LoginForm } from '../../features/auth/components/LoginForm/index'
 import { type LoginFormValues } from '../../features/auth/login-schema'
 import { loginWithCredentials } from '../../features/auth/mock-auth-service'
@@ -42,7 +41,6 @@ export function LoginPage() {
       return
     }
 
-    saveAuthSession(session)
     dispatch(loginSucceeded(session))
     navigate(redirectPath, { replace: true })
   }

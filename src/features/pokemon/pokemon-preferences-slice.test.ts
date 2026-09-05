@@ -2,65 +2,54 @@ import { describe, expect, it } from 'vitest'
 
 import {
   displayModeChanged,
-  getNextRecentlyVisitedPokemon,
+  getNextRecentlyVisitedIds,
   pokemonPreferencesReducer,
-  recentlyVisitedChanged,
+  recentlyVisitedIdsChanged,
 } from './pokemon-preferences-slice'
-import { type PokemonSummary } from './pokemon-types'
 
-const bulbasaur: PokemonSummary = {
-  id: 1,
-  imageUrl: 'bulbasaur.png',
-  name: 'bulbasaur',
-  types: ['grass'],
-}
-
-const charmander: PokemonSummary = {
-  id: 4,
-  imageUrl: 'charmander.png',
-  name: 'charmander',
-  types: ['fire'],
-}
-
-const squirtle: PokemonSummary = {
-  id: 7,
-  imageUrl: 'squirtle.png',
-  name: 'squirtle',
-  types: ['water'],
-}
-
-const pikachu: PokemonSummary = {
-  id: 25,
-  imageUrl: 'pikachu.png',
-  name: 'pikachu',
-  types: ['electric'],
-}
+const bulbasaurId = 1
+const charmanderId = 4
+const squirtleId = 7
+const pikachuId = 25
 
 describe('pokemonPreferencesSlice', () => {
   it('stores the selected display mode', () => {
     const state = pokemonPreferencesReducer(
-      { displayMode: 'grid', recentlyVisited: [] },
+      { displayMode: 'grid', recentlyVisitedIds: [] },
       displayModeChanged('list')
     )
 
     expect(state.displayMode).toBe('list')
   })
 
-  it('stores the last three visited pokemon', () => {
+  it('stores the last three visited pokemon ids', () => {
     const state = pokemonPreferencesReducer(
-      { displayMode: 'grid', recentlyVisited: [] },
-      recentlyVisitedChanged([bulbasaur, charmander, squirtle, pikachu])
+      { displayMode: 'grid', recentlyVisitedIds: [] },
+      recentlyVisitedIdsChanged([
+        bulbasaurId,
+        charmanderId,
+        squirtleId,
+        pikachuId,
+      ])
     )
 
-    expect(state.recentlyVisited).toEqual([bulbasaur, charmander, squirtle])
+    expect(state.recentlyVisitedIds).toEqual([
+      bulbasaurId,
+      charmanderId,
+      squirtleId,
+    ])
   })
 
-  it('moves an existing visited pokemon to the first position', () => {
-    const recentlyVisited = getNextRecentlyVisitedPokemon(
-      [bulbasaur, charmander, squirtle],
-      charmander
+  it('moves an existing visited pokemon id to the first position', () => {
+    const recentlyVisitedIds = getNextRecentlyVisitedIds(
+      [bulbasaurId, charmanderId, squirtleId],
+      charmanderId
     )
 
-    expect(recentlyVisited).toEqual([charmander, bulbasaur, squirtle])
+    expect(recentlyVisitedIds).toEqual([
+      charmanderId,
+      bulbasaurId,
+      squirtleId,
+    ])
   })
 })

@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
 import { mockPokemonListApi } from './mocks/pokemon-api'
-import { emptyPixel } from './mocks/pokemon-fixtures'
 
 test.beforeEach(async ({ page }) => {
   await mockPokemonListApi(page)
@@ -41,35 +40,16 @@ test('renders home hero and popular pokemon cards', async ({ page }) => {
 test('shows recently visited pokemon after three detail visits', async ({
   page,
 }) => {
-  await page.addInitScript((imageUrl) => {
+  await page.addInitScript(() => {
     Math.random = () => 0
     window.localStorage.setItem(
       'avamon.pokemon-preferences',
       JSON.stringify({
         displayMode: 'grid',
-        recentlyVisited: [
-          {
-            id: 25,
-            imageUrl,
-            name: 'pikachu',
-            types: ['electric'],
-          },
-          {
-            id: 4,
-            imageUrl,
-            name: 'charmander',
-            types: ['fire'],
-          },
-          {
-            id: 1,
-            imageUrl,
-            name: 'bulbasaur',
-            types: ['grass', 'poison'],
-          },
-        ],
+        recentlyVisitedIds: [25, 4, 1],
       })
     )
-  }, emptyPixel)
+  })
 
   await page.goto('/')
 

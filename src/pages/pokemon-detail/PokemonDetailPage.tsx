@@ -10,12 +10,11 @@ import { PokemonDetailStats } from '../../features/pokemon/components/PokemonDet
 import { PokemonEvolutionChain } from '../../features/pokemon/components/PokemonEvolutionChain'
 import { PokemonSprites } from '../../features/pokemon/components/PokemonSprites'
 import {
-  getNextRecentlyVisitedPokemon,
-  recentlyVisitedChanged,
+  getNextRecentlyVisitedIds,
+  recentlyVisitedIdsChanged,
 } from '../../features/pokemon/pokemon-preferences-slice'
-import { saveRecentlyVisitedPokemon } from '../../features/pokemon/pokemon-preferences-storage'
 import { usePokemonDetailQuery } from '../../features/pokemon/pokemon-query'
-import { selectRecentlyVisitedPokemon } from '../../features/pokemon/pokemon-selectors'
+import { selectRecentlyVisitedPokemonIds } from '../../features/pokemon/pokemon-selectors'
 import { type PokemonDetail } from '../../features/pokemon/pokemon-types'
 
 function PokemonDetailContent({ pokemon }: { pokemon: PokemonDetail }) {
@@ -46,23 +45,22 @@ function PokemonDetailContent({ pokemon }: { pokemon: PokemonDetail }) {
 
 export function PokemonDetailPage() {
   const dispatch = useAppDispatch()
-  const recentlyVisited = useAppSelector(selectRecentlyVisitedPokemon)
+  const recentlyVisitedIds = useAppSelector(selectRecentlyVisitedPokemonIds)
   const { pokemonNameOrId } = useParams()
   const detailQuery = usePokemonDetailQuery(pokemonNameOrId)
 
   useEffect(() => {
-    if (!detailQuery.data || recentlyVisited[0]?.id === detailQuery.data.id) {
+    if (!detailQuery.data || recentlyVisitedIds[0] === detailQuery.data.id) {
       return
     }
 
-    const nextRecentlyVisited = getNextRecentlyVisitedPokemon(
-      recentlyVisited,
-      detailQuery.data
+    const nextRecentlyVisitedIds = getNextRecentlyVisitedIds(
+      recentlyVisitedIds,
+      detailQuery.data.id
     )
 
-    saveRecentlyVisitedPokemon(nextRecentlyVisited)
-    dispatch(recentlyVisitedChanged(nextRecentlyVisited))
-  }, [detailQuery.data, dispatch, recentlyVisited])
+    dispatch(recentlyVisitedIdsChanged(nextRecentlyVisitedIds))
+  }, [detailQuery.data, dispatch, recentlyVisitedIds])
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-page-bg">

@@ -4,6 +4,7 @@ import { type SelectInstance } from 'react-select'
 
 import { formatPokemonName, formatPokemonNumber } from '../../pokemon-list-utils'
 import { usePokemonReferencesQuery } from '../../pokemon-query'
+import { getPokemonSpriteUrl } from '../../pokemon-sprite-url'
 import { type PokemonReference } from '../../pokemon-types'
 import { routes } from '../../../../app/routes'
 import {
@@ -25,12 +26,6 @@ interface PokemonSearchOption extends SelectInputOption<string> {
 
 const maxAutocompleteResults = 8
 const minAutocompleteCharacters = 2
-const pokemonSpriteBaseUrl =
-  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon'
-
-function getPokemonSpriteUrl(id: number) {
-  return `${pokemonSpriteBaseUrl}/${id}.png`
-}
 
 function toPokemonSearchOption(pokemon: PokemonReference): PokemonSearchOption {
   const formattedName = formatPokemonName(pokemon.name)

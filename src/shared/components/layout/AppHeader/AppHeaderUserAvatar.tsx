@@ -1,3 +1,5 @@
+import { getPokemonSpriteUrl } from '../../../../features/pokemon/pokemon-sprite-url'
+
 interface AppHeaderUserAvatarProps {
   avatarPokemonId: number
 }
@@ -10,7 +12,7 @@ export function AppHeaderUserAvatar({
       <img
         alt=""
         className="size-6"
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${avatarPokemonId}.png`}
+        src={getPokemonSpriteUrl(avatarPokemonId)}
       />
     </span>
   )
