@@ -260,4 +260,4 @@ For delivery readiness, verify the requested viewport widths manually or through
 
 Known acceptable build note:
 
-- The production build may show a Vite chunk-size warning because React Select and related dependencies are included in the client bundle. This warning does not break the build.
+- Route pages (`HomePage`, `LoginPage`, `PokemonListPage`, `PokemonDetailPage`) are loaded through `React.lazy()`; this keeps the shared entry chunk under the Vite chunk-size warning threshold. `react-select` still ships in that shared entry chunk because the header search mounts on every route — see `docs/ai/DECISIONS.md` for why this was intentionally left as-is.

@@ -83,6 +83,8 @@ The case does not require a backend authentication service, so demo users are ke
 - URL-backed list state for page, type filter, and sort order.
 - Loading, error, and image fallback states.
 - Responsive layouts targeting the requested widths: 360px, 412px, 1024px, 1280px, and 2560px.
+- Route-level code splitting (`React.lazy` + `Suspense`) for Home, Login, List, and Detail pages.
+- Playwright smoke coverage for all five requested viewport widths.
 
 ## Project Structure
 
@@ -285,13 +287,15 @@ Network-dependent browser flows are mocked in Playwright so the tests remain sta
 - Popular Pokémon are randomized from the loaded references. Recently visited Pokémon replace them once the user has viewed 3 detail pages.
 - The hero image is stored locally to keep the first viewport stable and avoid a visible late image load.
 - React Select adds bundle weight, but it provides reliable keyboard, focus, and menu behavior for autocomplete and select controls.
+- Route-level code splitting reduces each page's own JS, but `react-select` still ships in the shared entry chunk because the header search (`AppHeader` → `PokemonSearchSelect`) mounts on every route through `AppLayout`. Lazy-loading the search control itself was intentionally skipped to avoid a visible flash in a control that is always in the first viewport.
+- Automated responsive coverage (`tests/e2e/responsive.spec.ts`) checks that critical flows render and are reachable at each required width; pixel-level layout correctness is still confirmed through manual QA at each width.
 
 ## Known Limitations
 
 - Authentication is intentionally mocked because the case does not provide a real auth backend.
 - PokeAPI image availability differs between Pokémon forms, so the app includes local image fallback handling.
 - Some Pokémon have high API IDs because PokeAPI includes forms and variants in the `/pokemon` resource.
-- The production build may show a Vite chunk-size warning because React Select and related dependencies are included in the client bundle. The warning does not break the build.
+- `react-select` still ships in the shared entry chunk because the header search mounts on every route (see Trade-Offs). Route-level code splitting keeps every other page's own code out of that chunk.
 
 ## AI Assistance
 

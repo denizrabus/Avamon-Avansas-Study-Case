@@ -1,12 +1,30 @@
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { ProtectedRoute } from './ProtectedRoute'
 import { routes } from './routes'
-import { HomePage } from '../pages/home/HomePage'
-import { LoginPage } from '../pages/login/LoginPage'
-import { PokemonDetailPage } from '../pages/pokemon-detail/PokemonDetailPage'
-import { PokemonListPage } from '../pages/pokemon-list/PokemonListPage'
 import { AppLayout } from '../shared/components/layout/AppLayout'
+
+const HomePage = lazy(() =>
+  import('../pages/home/HomePage').then((module) => ({
+    default: module.HomePage,
+  }))
+)
+const LoginPage = lazy(() =>
+  import('../pages/login/LoginPage').then((module) => ({
+    default: module.LoginPage,
+  }))
+)
+const PokemonListPage = lazy(() =>
+  import('../pages/pokemon-list/PokemonListPage').then((module) => ({
+    default: module.PokemonListPage,
+  }))
+)
+const PokemonDetailPage = lazy(() =>
+  import('../pages/pokemon-detail/PokemonDetailPage').then((module) => ({
+    default: module.PokemonDetailPage,
+  }))
+)
 
 export function AppRouter() {
   return (

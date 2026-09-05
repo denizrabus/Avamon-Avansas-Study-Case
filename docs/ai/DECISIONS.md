@@ -280,6 +280,52 @@ Trade-off:
 - Some DevTools device presets such as iPad Air can show browser preview artifacts that are not direct case requirements.
 - Final QA should focus on the widths listed above.
 
+## 2026-09-05 - Route-Level Code Splitting
+
+`HomePage`, `LoginPage`, `PokemonListPage`, and `PokemonDetailPage` are loaded through `React.lazy()` in `src/app/router.tsx`, with a single `Suspense` boundary around the routed `Outlet` in `AppLayout`. `AppHeader` stays outside the boundary so the header never unmounts between route transitions.
+
+Reasoning:
+
+- The production build previously emitted a single ~534 kB (168 kB gzip) JS chunk and a Vite chunk-size warning, mainly because every page's code shipped together regardless of which route was visited.
+- Splitting by route lets page-specific code (list filtering/pagination UI, detail stats/sprites/evolution chain, the login form's React Hook Form + Zod stack) load only when that page is actually visited.
+- After splitting, the shared entry chunk dropped to ~393 kB (128 kB gzip) and the chunk-size warning no longer appears, since no single chunk exceeds the 500 kB threshold.
+
+Trade-off:
+
+- `react-select` is not removed from the shared entry chunk by this change. `PokemonSearchSelect` (built on `SelectInput` / `react-select`) is rendered by `AppHeader`, which is part of `AppLayout` and mounts on every route, including Home and Login. Route-level splitting therefore reduces each page's *own* code, not the header's shared dependencies.
+- A further optimization would lazy-load the search control itself and swap it in once loaded, but that risks a visible flash/placeholder in a control that sits in the first viewport on every page. Given the case explicitly asks for a working search box in the header at all times, this was intentionally left out.
+- A `react-select` vendor chunk via bundler-level manual chunking was considered (see below) but not applied, since it does not reduce first-visit bytes and this is a one-time case submission rather than an app with repeat deploys that would benefit from the resulting cache-hit improvement.
+
+## 2026-09-05 - Manual Vendor Chunking Was Considered And Skipped
+
+Separating `react-select` into its own chunk (via Rolldown's `build.rolldownOptions.output` config — this project's Vite 8 build uses Rolldown, not classic Rollup, so the equivalent of `manualChunks` lives under `rolldownOptions`, not `rollupOptions`) was evaluated after route-level code splitting.
+
+Reasoning it was not applied:
+
+- The chunk-size warning was already resolved by route-level splitting alone; a vendor chunk was no longer solving an existing problem.
+- Its main benefit is long-term cache-hit rate across repeat deploys (vendor code changes less often than app code), which does not apply to a one-time case submission with no production redeploy cadence.
+- It does not reduce the number of bytes a first-time visitor downloads before the app is interactive, since the header search still needs `react-select` immediately on every route.
+
+Trade-off:
+
+- If Avamon became a long-lived, repeatedly deployed app, revisiting this with Rolldown's manual chunking API would be worth doing.
+
+## 2026-09-05 - Responsive Viewport E2E Coverage
+
+The case requires the app to be reviewed at 360px, 412px, 1024px, 1280px, and 2560px. Before this change, Playwright only ran the full functional suite at the default desktop size (`chromium`, effectively 1280px) and at 360px (`mobile-360`); 412px, 1024px, and 2560px were only checked manually.
+
+`tests/e2e/responsive.spec.ts` was added with smoke assertions (home hero, login form, list grid/list modes, protected detail page, header autocomplete) that do not depend on a specific viewport width. Three new Playwright projects (`responsive-412`, `responsive-1024`, `responsive-2560`) run only this file via `testMatch`, and `chromium`/`mobile-360` exclude it via `testIgnore` so the same 5 smoke tests do not also run redundantly at the 1280px/360px widths the full functional suite already covers.
+
+Reasoning:
+
+- 1280px and 360px are already exercised by the full functional suite (`chromium`, `mobile-360`), so those two widths did not need new projects, and the smoke spec should not duplicate that coverage there either.
+- Running the entire existing suite at three more viewport widths would have multiplied CI time for marginal benefit; a small width-agnostic smoke spec gives real coverage of the missing widths without that cost.
+- `testMatch: 'responsive.spec.ts'` on the new projects plus `testIgnore: 'responsive.spec.ts'` on the existing two projects keeps each project running exactly what it should: `chromium`/`mobile-360` keep running only the 12 functional tests each (24 total, unchanged), and the smoke spec runs exactly once per required width (5 tests × 3 widths = 15 new test executions), for 39 tests total.
+
+Trade-off:
+
+- The new projects check that critical content renders and is reachable at each width, not pixel-level layout correctness. Manual QA is still the way visual layout is verified at each width.
+
 ## 2026-09-05 - Testing Strategy
 
 The project uses a layered testing strategy:

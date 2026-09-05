@@ -30,6 +30,15 @@ Use Playwright for critical user journeys:
 - exact search submit navigates to a detail page
 - list filters, sorting, pagination, and display mode survive refresh
 
+## Responsive Viewport Coverage
+
+The case requires review at 360px, 412px, 1024px, 1280px, and 2560px.
+
+- `chromium` (1280px) and `mobile-360` (360px) run the full functional suite above. They exclude `responsive.spec.ts` via `testIgnore` so the smoke spec does not duplicate coverage at widths the functional suite already exercises.
+- `responsive-412`, `responsive-1024`, and `responsive-2560` run only `tests/e2e/responsive.spec.ts` (via `testMatch`), a width-agnostic smoke spec that confirms the home, login, list (grid and list modes), protected detail, and header autocomplete flows render and are reachable at each width.
+- Net effect: the full functional suite still runs exactly twice (`chromium`, `mobile-360`), and the smoke spec runs exactly once per required width — 15 additional test executions (5 tests × 3 widths), not a multiple of the full suite.
+- This covers reachability at every required width in CI. Pixel-level layout correctness is still verified through manual QA at each width before submission.
+
 ## Test Rules
 
 - Prefer behavior-focused test names.
