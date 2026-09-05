@@ -22,13 +22,13 @@ describe('PokemonListControls', () => {
       />
     )
 
-    await user.click(screen.getByRole('combobox', { name: 'Tür filtresi' }))
+    await user.click(screen.getByRole('combobox', { name: 'Type filter' }))
     await user.click(screen.getByText('Fire'))
 
-    await user.click(screen.getByRole('combobox', { name: 'Sıralama' }))
-    await user.click(screen.getByText('İsim: Z - A'))
+    await user.click(screen.getByRole('combobox', { name: 'Sort order' }))
+    await user.click(screen.getByText('Name: Z - A'))
 
-    await user.click(screen.getByRole('button', { name: 'Liste görünüm' }))
+    await user.click(screen.getByRole('button', { name: 'List view' }))
 
     expect(handleTypeChange).toHaveBeenCalledWith('fire')
     expect(handleSortChange).toHaveBeenCalledWith('name-desc')

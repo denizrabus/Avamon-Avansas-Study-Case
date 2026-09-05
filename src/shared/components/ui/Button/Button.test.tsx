@@ -7,18 +7,18 @@ import { Button, ButtonLink } from './Button'
 
 describe('Button', () => {
   it('renders an accessible button with content', () => {
-    render(<Button>Giriş Yap</Button>)
+    render(<Button>Login</Button>)
 
-    expect(screen.getByRole('button', { name: 'Giriş Yap' })).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Login' })).toBeVisible()
   })
 
   it('calls onClick when enabled', async () => {
     const user = userEvent.setup()
     const handleClick = vi.fn()
 
-    render(<Button onClick={handleClick}>Tüm Pokemon</Button>)
+    render(<Button onClick={handleClick}>All Pokemon</Button>)
 
-    await user.click(screen.getByRole('button', { name: 'Tüm Pokemon' }))
+    await user.click(screen.getByRole('button', { name: 'All Pokemon' }))
 
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
@@ -29,11 +29,11 @@ describe('Button', () => {
 
     render(
       <Button disabled onClick={handleClick}>
-        Kaydet
+        Save
       </Button>
     )
 
-    await user.click(screen.getByRole('button', { name: 'Kaydet' }))
+    await user.click(screen.getByRole('button', { name: 'Save' }))
 
     expect(handleClick).not.toHaveBeenCalled()
   })
@@ -41,11 +41,11 @@ describe('Button', () => {
   it('renders a link with button styles for navigation actions', () => {
     render(
       <MemoryRouter>
-        <ButtonLink to="/pokemon">Tüm Pokémon</ButtonLink>
+        <ButtonLink to="/pokemon">All Pokémon</ButtonLink>
       </MemoryRouter>
     )
 
-    expect(screen.getByRole('link', { name: 'Tüm Pokémon' }))
+    expect(screen.getByRole('link', { name: 'All Pokémon' }))
       .toHaveAttribute('href', '/pokemon')
   })
 })

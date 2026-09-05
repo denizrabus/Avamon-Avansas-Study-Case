@@ -18,7 +18,7 @@ export function PokemonAbilities({
         className="text-sm font-semibold uppercase tracking-wide text-muted"
         id="pokemon-abilities-title"
       >
-        YETENEKLER
+        ABILITIES
       </h2>
       <div className="flex flex-wrap gap-3">
         {abilities.map((ability) => (
@@ -33,7 +33,7 @@ export function PokemonAbilities({
             {formatAbilityName(ability.name)}
             {ability.isHidden ? (
               <span className="rounded-full bg-avamon-yellow px-2 py-0.5 text-[10px] font-semibold text-ink">
-                Gizli
+                Hidden
               </span>
             ) : null}
           </span>

@@ -29,7 +29,7 @@ import {
 const itemsPerPage = 24
 
 function formatPokemonCount(count: number) {
-  return new Intl.NumberFormat('tr-TR').format(count)
+  return new Intl.NumberFormat('en-US').format(count)
 }
 
 function updateSearchParams(
@@ -138,10 +138,10 @@ export function PokemonListPage() {
         <div className="flex flex-col gap-5 tablet:flex-row tablet:items-center tablet:justify-between">
           <div className="flex items-start justify-between gap-4 tablet:items-end tablet:justify-start">
             <h1 className="text-3xl font-bold leading-tight text-ink tablet:text-4xl">
-              Tüm Pokémon
+              All Pokémon
             </h1>
             <p className="shrink-0 pt-2 text-sm text-muted tablet:pb-1 tablet:pt-0 tablet:text-base">
-              {formatPokemonCount(referencesQuery.data?.count ?? 1302)} pokémon
+              {formatPokemonCount(referencesQuery.data?.count ?? 1302)} Pokémon
             </p>
           </div>
 
@@ -160,7 +160,7 @@ export function PokemonListPage() {
             className="mt-8 rounded-card border border-avamon-red/30 bg-surface p-6 text-sm font-bold text-avamon-red shadow-card"
             role="alert"
           >
-            Pokémon listesi yüklenemedi. Lütfen tekrar deneyin.
+            Pokémon list could not be loaded. Please try again.
           </div>
         ) : null}
 

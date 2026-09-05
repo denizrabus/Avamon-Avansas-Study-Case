@@ -17,11 +17,11 @@ export function PokemonPagination({
 
   return (
     <nav
-      aria-label="Sayfalama"
+      aria-label="Pagination"
       className="flex items-center justify-center gap-2"
     >
       <button
-        aria-label="Önceki sayfa"
+        aria-label="Previous page"
         className="grid size-10 cursor-pointer place-items-center rounded-lg bg-surface text-muted shadow-sm transition hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
@@ -56,7 +56,7 @@ export function PokemonPagination({
       )}
 
       <button
-        aria-label="Sonraki sayfa"
+        aria-label="Next page"
         className="grid size-10 cursor-pointer place-items-center rounded-lg bg-surface text-muted shadow-sm transition hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}

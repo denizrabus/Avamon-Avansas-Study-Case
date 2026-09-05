@@ -38,7 +38,7 @@ export function LoginPage() {
     const session = loginWithCredentials(values)
 
     if (!session) {
-      setError('Kullanıcı adı veya şifre hatalı')
+      setError('Invalid username or password')
       return
     }
 
@@ -53,7 +53,7 @@ export function LoginPage() {
         error={error}
         footer={
           <Link className="text-sm font-semibold text-avamon-red-soft" to={routes.home}>
-            ← Ana sayfaya dön
+            ← Back to home
           </Link>
         }
         onSubmit={handleLogin}

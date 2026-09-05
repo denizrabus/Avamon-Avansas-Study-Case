@@ -3,21 +3,21 @@ import { expect, test, type Page } from '@playwright/test'
 import { mockPokemonDetailApi } from './mocks/pokemon-api'
 
 async function expectAuthenticatedHeader(page: Page) {
-  const mobileMenuButton = page.getByRole('button', { name: 'Menüyü aç' })
+  const mobileMenuButton = page.getByRole('button', { name: 'Open menu' })
 
   if (await mobileMenuButton.isVisible()) {
     await mobileMenuButton.click()
 
     await expect(
       page
-        .getByRole('region', { name: 'Mobil menü' })
-        .getByRole('button', { name: 'Çıkış' })
+        .getByRole('region', { name: 'Mobile menu' })
+        .getByRole('button', { name: 'Logout' })
     ).toBeVisible()
 
     return
   }
 
-  await expect(page.getByRole('button', { name: 'Çıkış' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible()
 }
 
 test.beforeEach(async ({ page }) => {
@@ -33,10 +33,10 @@ test('logs in with a demo user', async ({ page }) => {
 
   await page.getByRole('button', { name: /Güven Altuntaş/i }).click()
 
-  await expect(page.getByLabel('Kullanıcı Adı')).toHaveValue('guven')
-  await expect(page.getByLabel('Şifre')).toHaveValue('altuntas')
+  await expect(page.getByLabel('Username')).toHaveValue('guven')
+  await expect(page.getByLabel('Password')).toHaveValue('altuntas')
 
-  await page.locator('main').getByRole('button', { name: 'Giriş Yap' }).click()
+  await page.locator('main').getByRole('button', { name: 'Login' }).click()
 
   await expect(page).toHaveURL('/')
   await expectAuthenticatedHeader(page)
@@ -56,13 +56,13 @@ test('redirects visitors from protected pokemon detail to login', async ({
   await expect(page).toHaveURL('/login')
 
   await page.getByRole('button', { name: /Güven Altuntaş/i }).click()
-  await page.locator('main').getByRole('button', { name: 'Giriş Yap' }).click()
+  await page.locator('main').getByRole('button', { name: 'Login' }).click()
 
   await expect(page).toHaveURL('/pokemon/pikachu')
   await expect(
     page.getByRole('heading', { name: 'Pikachu' })
   ).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'TEMEL İSTATİSTİKLER' })
+    page.getByRole('heading', { name: 'BASE STATS' })
   ).toBeVisible()
 })

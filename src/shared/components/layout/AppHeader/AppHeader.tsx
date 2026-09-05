@@ -34,7 +34,7 @@ export function AppHeader({ onLogout }: AppHeaderProps) {
         <AppLogo />
 
         <nav className="hidden items-center gap-6 text-sm  text-white tablet:flex">
-          <Link to={routes.pokemonList}>Tüm Pokémonlar</Link>
+          <Link to={routes.pokemonList}>All Pokémon</Link>
         </nav>
 
         <div className="hidden flex-1 tablet:block">
@@ -48,7 +48,7 @@ export function AppHeader({ onLogout }: AppHeaderProps) {
 
         <button
           aria-expanded={isMobileMenuOpen}
-          aria-label={isMobileMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
           className="ml-auto inline-flex size-10 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-avamon-yellow tablet:hidden"
           onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
           type="button"

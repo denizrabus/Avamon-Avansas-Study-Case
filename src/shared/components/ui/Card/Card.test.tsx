@@ -11,8 +11,8 @@ describe('Card', () => {
   })
 
   it('renders a title when provided', () => {
-    render(<Card title="Popüler Pokemon">Charmander</Card>)
+    render(<Card title="Popular Pokemon">Charmander</Card>)
 
-    expect(screen.getByRole('heading', { name: 'Popüler Pokemon' })).toBeVisible()
+    expect(screen.getByRole('heading', { name: 'Popular Pokemon' })).toBeVisible()
   })
 })

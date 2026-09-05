@@ -8,14 +8,14 @@ describe('PokemonSprites', () => {
     render(
       <PokemonSprites
         sprites={[
-          { imageUrl: 'front.png', label: 'Ön' },
+          { imageUrl: 'front.png', label: 'Front' },
           { imageUrl: 'back.png', label: 'Arka' },
         ]}
       />
     )
 
-    expect(screen.getByRole('heading', { name: /görünümler/i })).toBeVisible()
-    expect(screen.getByRole('img', { name: 'Ön' })).toBeVisible()
+    expect(screen.getByRole('heading', { name: /sprites/i })).toBeVisible()
+    expect(screen.getByRole('img', { name: 'Front' })).toBeVisible()
     expect(screen.getByRole('img', { name: 'Arka' })).toBeVisible()
   })
 })

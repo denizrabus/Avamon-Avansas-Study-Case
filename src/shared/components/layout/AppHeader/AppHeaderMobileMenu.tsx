@@ -18,14 +18,14 @@ export function AppHeaderMobileMenu({
 }: AppHeaderMobileMenuProps) {
   return (
     <div
-      aria-label="Mobil menü"
+      aria-label="Mobile menu"
       className="border-t border-white/15 bg-avamon-red px-6 pb-5 pt-4 tablet:hidden"
       role="region"
     >
       <div className="mx-auto flex max-w-page flex-col gap-4 wide:max-w-wide-page">
         <nav className="flex flex-col gap-3 text-sm font-bold text-white">
           <Link onClick={onClose} to={routes.pokemonList}>
-            Tüm Pokémonlar
+            All Pokémon
           </Link>
         </nav>
 
@@ -44,7 +44,7 @@ export function AppHeaderMobileMenu({
               onClick={onLogout}
               type="button"
             >
-              Çıkış
+              Logout
             </button>
           </div>
         ) : (
@@ -53,7 +53,7 @@ export function AppHeaderMobileMenu({
             onClick={onClose}
             to={routes.login}
           >
-            Giriş Yap
+            Login
           </Link>
         )}
       </div>

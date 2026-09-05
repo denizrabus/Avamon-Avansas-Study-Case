@@ -8,16 +8,16 @@ describe('Input', () => {
   it('accepts typed text', async () => {
     const user = userEvent.setup()
 
-    render(<Input aria-label="Kullanıcı Adı" />)
+    render(<Input aria-label="Username" />)
 
-    await user.type(screen.getByLabelText('Kullanıcı Adı'), 'guven')
+    await user.type(screen.getByLabelText('Username'), 'guven')
 
-    expect(screen.getByLabelText('Kullanıcı Adı')).toHaveValue('guven')
+    expect(screen.getByLabelText('Username')).toHaveValue('guven')
   })
 
   it('marks the input as invalid when invalid is true', () => {
-    render(<Input aria-label="Şifre" invalid />)
+    render(<Input aria-label="Password" invalid />)
 
-    expect(screen.getByLabelText('Şifre')).toHaveAttribute('aria-invalid', 'true')
+    expect(screen.getByLabelText('Password')).toHaveAttribute('aria-invalid', 'true')
   })
 })

@@ -4,6 +4,6 @@ test('renders the home page', async ({ page }) => {
   await page.goto('/')
 
   await expect(
-    page.getByRole('heading', { name: /Tüm Pokémon'ları Keşfet/i })
+    page.getByRole('heading', { name: /Explore All Pokémon/i })
   ).toBeVisible()
 })

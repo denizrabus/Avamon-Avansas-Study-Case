@@ -48,7 +48,7 @@ function StatBar({ stat }: { stat: PokemonStat }) {
 
 export function PokemonDetailStats({ stats }: { stats: PokemonStat[] }) {
   const totalStat: PokemonStat = {
-    label: 'Toplam',
+    label: 'Total',
     name: 'total',
     value: stats.reduce((total, stat) => total + stat.value, 0),
   }
@@ -59,7 +59,7 @@ export function PokemonDetailStats({ stats }: { stats: PokemonStat[] }) {
         className="text-sm font-semibold uppercase tracking-wide text-muted"
         id="pokemon-stats-title"
       >
-        TEMEL İSTATİSTİKLER
+        BASE STATS
       </h2>
       <div className="space-y-4">
         {[...stats, totalStat].map((stat) => (

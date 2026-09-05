@@ -72,7 +72,7 @@ export function PokemonDetailPage() {
           to={routes.pokemonList}
         >
           <ArrowLeft aria-hidden className="size-4" />
-          Tüm Pokémonlar
+          All Pokémon
         </Link>
       </div>
 
@@ -94,7 +94,7 @@ export function PokemonDetailPage() {
             className="rounded-card border border-avamon-red/30 bg-surface p-6 text-sm font-bold text-avamon-red shadow-card"
             role="alert"
           >
-            Pokémon detayı yüklenemedi. Lütfen tekrar deneyin.
+            Pokémon detail could not be loaded. Please try again.
           </div>
         </section>
       ) : null}

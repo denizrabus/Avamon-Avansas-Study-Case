@@ -22,10 +22,10 @@ describe('loginSchema', () => {
 
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.username).toContain(
-        'Kullanıcı adı zorunludur'
+        'Username is required'
       )
       expect(result.error.flatten().fieldErrors.password).toContain(
-        'Şifre zorunludur'
+        'Password is required'
       )
     }
   })

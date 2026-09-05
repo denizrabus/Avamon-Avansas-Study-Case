@@ -6,8 +6,8 @@ import { type PokemonStat } from '../../pokemon-types'
 
 const stats: PokemonStat[] = [
   { label: 'HP', name: 'hp', value: 35 },
-  { label: 'Atk', name: 'attack', value: 55 },
-  { label: 'Hız', name: 'speed', value: 90 },
+  { label: 'Attack', name: 'attack', value: 55 },
+  { label: 'Speed', name: 'speed', value: 90 },
 ]
 
 describe('PokemonDetailStats', () => {
@@ -15,9 +15,9 @@ describe('PokemonDetailStats', () => {
     render(<PokemonDetailStats stats={stats} />)
 
     expect(
-      screen.getByRole('heading', { name: 'TEMEL İSTATİSTİKLER' })
+      screen.getByRole('heading', { name: 'BASE STATS' })
     ).toBeVisible()
     expect(screen.getByLabelText('HP: 35')).toBeVisible()
-    expect(screen.getByLabelText('Toplam: 180')).toBeVisible()
+    expect(screen.getByLabelText('Total: 180')).toBeVisible()
   })
 })

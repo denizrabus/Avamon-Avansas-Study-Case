@@ -13,9 +13,9 @@ describe('PokemonAbilities', () => {
   it('renders visible and hidden abilities', () => {
     render(<PokemonAbilities abilities={abilities} />)
 
-    expect(screen.getByRole('heading', { name: 'YETENEKLER' })).toBeVisible()
+    expect(screen.getByRole('heading', { name: 'ABILITIES' })).toBeVisible()
     expect(screen.getByText('Overgrow')).toBeVisible()
     expect(screen.getByText('Chlorophyll')).toBeVisible()
-    expect(screen.getByText('Gizli')).toBeVisible()
+    expect(screen.getByText('Hidden')).toBeVisible()
   })
 })

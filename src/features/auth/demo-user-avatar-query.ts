@@ -14,7 +14,7 @@ async function fetchPokemonSprite(pokemonId: number) {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
 
   if (!response.ok) {
-    throw new Error('Pokemon avatarı yüklenemedi')
+    throw new Error('Pokemon avatar could not be loaded')
   }
 
   const data = (await response.json()) as PokemonSpriteResponse

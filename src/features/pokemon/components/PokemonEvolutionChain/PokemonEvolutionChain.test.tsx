@@ -17,7 +17,7 @@ describe('PokemonEvolutionChain', () => {
       </MemoryRouter>
     )
 
-    expect(screen.getByRole('heading', { name: 'EVRİM ZİNCİRİ' })).toBeVisible()
+    expect(screen.getByRole('heading', { name: 'EVOLUTION CHAIN' })).toBeVisible()
     expect(screen.getByRole('link', { name: /Pikachu/i })).toHaveAttribute(
       'href',
       '/pokemon/pikachu'

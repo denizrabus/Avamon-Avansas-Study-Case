@@ -24,7 +24,7 @@ export function PokemonEvolutionChain({
         className="text-sm font-semibold uppercase tracking-wide text-muted"
         id="pokemon-evolution-title"
       >
-        EVRİM ZİNCİRİ
+        EVOLUTION CHAIN
       </h2>
       <div className="flex items-center gap-2 overflow-x-auto pb-2 tablet:flex-wrap tablet:gap-4 tablet:overflow-visible tablet:pb-0">
         {evolutions.map((pokemon, index) => (

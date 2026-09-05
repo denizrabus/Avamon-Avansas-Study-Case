@@ -22,12 +22,12 @@ const officialArtworkBaseUrl =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork'
 
 const statLabels: Record<string, string> = {
-  attack: 'Atk',
-  defense: 'Def',
+  attack: 'Attack',
+  defense: 'Defense',
   hp: 'HP',
   'special-attack': 'Sp.Atk',
   'special-defense': 'Sp.Def',
-  speed: 'Hız',
+  speed: 'Speed',
 }
 
 export function toPokemonReference(
@@ -120,10 +120,10 @@ function toPokemonStats(response: PokemonDetailResponse): PokemonStat[] {
 
 function toPokemonSprites(response: PokemonDetailResponse): PokemonSprite[] {
   const sprites = [
-    { imageUrl: response.sprites.front_default, label: 'Ön' },
-    { imageUrl: response.sprites.back_default, label: 'Arka' },
-    { imageUrl: response.sprites.front_shiny, label: 'Parlak Ön' },
-    { imageUrl: response.sprites.back_shiny, label: 'Parlak Arka' },
+    { imageUrl: response.sprites.front_default, label: 'Front' },
+    { imageUrl: response.sprites.back_default, label: 'Back' },
+    { imageUrl: response.sprites.front_shiny, label: 'Shiny Front' },
+    { imageUrl: response.sprites.back_shiny, label: 'Shiny Back' },
   ]
 
   return sprites.flatMap((sprite) =>

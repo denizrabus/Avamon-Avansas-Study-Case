@@ -42,10 +42,10 @@ describe('LoginForm', () => {
 
     renderLoginForm({ onSubmit: vi.fn() })
 
-    await user.click(screen.getByRole('button', { name: 'Giriş Yap' }))
+    await user.click(screen.getByRole('button', { name: 'Login' }))
 
-    expect(await screen.findByText('Kullanıcı adı zorunludur')).toBeVisible()
-    expect(screen.getByText('Şifre zorunludur')).toBeVisible()
+    expect(await screen.findByText('Username is required')).toBeVisible()
+    expect(screen.getByText('Password is required')).toBeVisible()
   })
 
   it('fills the form when a demo user is selected', async () => {
@@ -55,8 +55,8 @@ describe('LoginForm', () => {
 
     await user.click(screen.getByRole('button', { name: /Güven Altuntaş/i }))
 
-    expect(screen.getByLabelText('Kullanıcı Adı')).toHaveValue('guven')
-    expect(screen.getByLabelText('Şifre')).toHaveValue('altuntas')
+    expect(screen.getByLabelText('Username')).toHaveValue('guven')
+    expect(screen.getByLabelText('Password')).toHaveValue('altuntas')
   })
 
   it('submits username and password values', async () => {
@@ -65,9 +65,9 @@ describe('LoginForm', () => {
 
     renderLoginForm({ onSubmit: handleSubmit })
 
-    await user.type(screen.getByLabelText('Kullanıcı Adı'), 'guven')
-    await user.type(screen.getByLabelText('Şifre'), 'altuntas')
-    await user.click(screen.getByRole('button', { name: 'Giriş Yap' }))
+    await user.type(screen.getByLabelText('Username'), 'guven')
+    await user.type(screen.getByLabelText('Password'), 'altuntas')
+    await user.click(screen.getByRole('button', { name: 'Login' }))
 
     expect(handleSubmit).toHaveBeenCalledWith({
       password: 'altuntas',
@@ -77,12 +77,12 @@ describe('LoginForm', () => {
 
   it('shows an invalid credentials error inside the form', () => {
     renderLoginForm({
-      error: 'Kullanıcı adı veya şifre hatalı',
+      error: 'Invalid username or password',
       onSubmit: vi.fn(),
     })
 
     expect(screen.getByRole('alert')).toHaveTextContent(
-      'Kullanıcı adı veya şifre hatalı'
+      'Invalid username or password'
     )
   })
 })

@@ -7,27 +7,27 @@ import { Input } from '../Input'
 describe('FormField', () => {
   it('renders a label connected to the input', () => {
     render(
-      <FormField label="Kullanıcı Adı" htmlFor="username">
+      <FormField label="Username" htmlFor="username">
         <Input id="username" />
       </FormField>
     )
 
-    expect(screen.getByLabelText('Kullanıcı Adı')).toBeVisible()
+    expect(screen.getByLabelText('Username')).toBeVisible()
   })
 
   it('renders helper and error messages', () => {
     render(
       <FormField
-        error="Kullanıcı adı zorunludur"
-        helperText="Demo kullanıcı seçebilirsin"
+        error="Username is required"
+        helperText="You can select a demo user"
         htmlFor="username"
-        label="Kullanıcı Adı"
+        label="Username"
       >
         <Input id="username" invalid />
       </FormField>
     )
 
-    expect(screen.getByText('Demo kullanıcı seçebilirsin')).toBeVisible()
-    expect(screen.getByText('Kullanıcı adı zorunludur')).toBeVisible()
+    expect(screen.getByText('You can select a demo user')).toBeVisible()
+    expect(screen.getByText('Username is required')).toBeVisible()
   })
 })

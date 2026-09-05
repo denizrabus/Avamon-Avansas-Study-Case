@@ -125,7 +125,7 @@ export function SelectInput<
   onFocus,
   onInputChange,
   onKeyDown,
-  noOptionsMessage = 'Sonuç bulunamadı',
+  noOptionsMessage = 'No results found',
   options,
   placeholder,
   selectRef,

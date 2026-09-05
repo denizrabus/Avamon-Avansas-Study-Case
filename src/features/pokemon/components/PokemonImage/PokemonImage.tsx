@@ -54,7 +54,7 @@ export function PokemonImage({
 
       {hasError ? (
         <img
-          alt={`${alt} görseli bulunamadı`}
+          alt={`${alt} image not available`}
           className={cn('relative size-20 opacity-70', fallbackClassName)}
           draggable={false}
           src="/pokeball-placeholder.svg"

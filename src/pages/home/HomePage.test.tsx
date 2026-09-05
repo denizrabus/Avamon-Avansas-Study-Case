@@ -151,13 +151,13 @@ describe('HomePage', () => {
     renderHomePage()
 
     expect(
-      screen.getByRole('heading', { name: /Tüm Pokémon'ları Keşfet/i })
+      screen.getByRole('heading', { name: /Explore All Pokémon/i })
     ).toBeVisible()
-    expect(screen.getByRole('link', { name: 'Tüm Pokémon' }))
+    expect(screen.getByRole('link', { name: 'All Pokémon' }))
       .toHaveAttribute('href', '/pokemon')
-    expect(screen.getByRole('link', { name: 'Giriş Yap' }))
+    expect(screen.getByRole('link', { name: 'Login' }))
       .toHaveAttribute('href', '/login')
-    expect(screen.getByRole('heading', { name: 'Popüler Pokémon' }))
+    expect(screen.getByRole('heading', { name: 'Popular Pokémon' }))
       .toBeVisible()
     expect(screen.getByRole('link', { name: /Bulbasaur/i })).toBeVisible()
     expect(screen.getByRole('link', { name: /Ivysaur/i })).toBeVisible()
@@ -169,8 +169,8 @@ describe('HomePage', () => {
 
     renderHomePage({ isAuthenticated: true })
 
-    expect(screen.getByRole('link', { name: 'Tüm Pokémon' })).toBeVisible()
-    expect(screen.queryByRole('link', { name: 'Giriş Yap' }))
+    expect(screen.getByRole('link', { name: 'All Pokémon' })).toBeVisible()
+    expect(screen.queryByRole('link', { name: 'Login' }))
       .not.toBeInTheDocument()
   })
 
@@ -185,9 +185,9 @@ describe('HomePage', () => {
 
     renderHomePage({ recentlyVisitedPokemon })
 
-    expect(screen.getByRole('heading', { name: 'Son Ziyaret Edilenler' }))
+    expect(screen.getByRole('heading', { name: 'Recently Visited' }))
       .toBeVisible()
-    expect(screen.queryByRole('heading', { name: 'Popüler Pokémon' }))
+    expect(screen.queryByRole('heading', { name: 'Popular Pokémon' }))
       .not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Pikachu/i })).toBeVisible()
     expect(screen.getByRole('link', { name: /Charmander/i })).toBeVisible()

@@ -64,15 +64,15 @@ describe('AppHeader', () => {
       'href',
       '/'
     )
-    expect(screen.getByRole('link', { name: 'Tüm Pokémonlar' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'All Pokémon' })).toHaveAttribute(
       'href',
       '/pokemon'
     )
-    expect(screen.getByRole('link', { name: 'Giriş Yap' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Login' })).toHaveAttribute(
       'href',
       '/login'
     )
-    expect(screen.getByRole('combobox', { name: 'Pokémon ara' })).toBeVisible()
+    expect(screen.getByRole('combobox', { name: 'Search Pokémon' })).toBeVisible()
   })
 
   it('opens mobile menu with visitor actions', async () => {
@@ -81,20 +81,20 @@ describe('AppHeader', () => {
     renderHeader()
 
     expect(
-      screen.queryByRole('region', { name: 'Mobil menü' })
+      screen.queryByRole('region', { name: 'Mobile menu' })
     ).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Menüyü aç' }))
+    await user.click(screen.getByRole('button', { name: 'Open menu' }))
 
-    const mobileMenu = screen.getByRole('region', { name: 'Mobil menü' })
+    const mobileMenu = screen.getByRole('region', { name: 'Mobile menu' })
 
     expect(
-      within(mobileMenu).getByRole('link', { name: 'Tüm Pokémonlar' })
+      within(mobileMenu).getByRole('link', { name: 'All Pokémon' })
     ).toHaveAttribute('href', '/pokemon')
     expect(
-      within(mobileMenu).getByRole('combobox', { name: 'Pokémon ara' })
+      within(mobileMenu).getByRole('combobox', { name: 'Search Pokémon' })
     ).toBeVisible()
-    expect(within(mobileMenu).getByRole('link', { name: 'Giriş Yap' }))
+    expect(within(mobileMenu).getByRole('link', { name: 'Login' }))
       .toHaveAttribute('href', '/login')
   })
 
@@ -116,7 +116,7 @@ describe('AppHeader', () => {
 
     expect(screen.getByText('Güven Altuntaş')).toBeVisible()
 
-    await user.click(screen.getByRole('button', { name: 'Çıkış' }))
+    await user.click(screen.getByRole('button', { name: 'Logout' }))
 
     expect(handleLogout).toHaveBeenCalledTimes(1)
   })
@@ -137,14 +137,14 @@ describe('AppHeader', () => {
       },
     })
 
-    await user.click(screen.getByRole('button', { name: 'Menüyü aç' }))
+    await user.click(screen.getByRole('button', { name: 'Open menu' }))
 
-    const mobileMenu = screen.getByRole('region', { name: 'Mobil menü' })
+    const mobileMenu = screen.getByRole('region', { name: 'Mobile menu' })
 
     expect(within(mobileMenu).getByText('Güven Altuntaş')).toBeVisible()
 
     await user.click(
-      within(mobileMenu).getByRole('button', { name: 'Çıkış' })
+      within(mobileMenu).getByRole('button', { name: 'Logout' })
     )
 
     expect(handleLogout).toHaveBeenCalledTimes(1)

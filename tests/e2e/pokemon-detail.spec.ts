@@ -3,13 +3,13 @@ import { expect, test, type Page } from '@playwright/test'
 import { mockPokemonDetailApi } from './mocks/pokemon-api'
 
 async function getHeaderSearch(page: Page) {
-  const mobileMenuButton = page.getByRole('button', { name: 'Menüyü aç' })
+  const mobileMenuButton = page.getByRole('button', { name: 'Open menu' })
 
   if (await mobileMenuButton.isVisible()) {
     await mobileMenuButton.click()
   }
 
-  return page.getByRole('combobox', { name: 'Pokémon ara' })
+  return page.getByRole('combobox', { name: 'Search Pokémon' })
 }
 
 test.beforeEach(async ({ page }) => {
@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
 test('shows pokemon detail data for authenticated users', async ({ page }) => {
   await page.goto('/login')
   await page.getByRole('button', { name: /Güven Altuntaş/i }).click()
-  await page.locator('main').getByRole('button', { name: 'Giriş Yap' }).click()
+  await page.locator('main').getByRole('button', { name: 'Login' }).click()
 
   await page.goto('/pokemon/pikachu')
 
@@ -33,9 +33,9 @@ test('shows pokemon detail data for authenticated users', async ({ page }) => {
   await expect(page.getByText('6.0 kg')).toBeVisible()
   await expect(page.getByText('112')).toBeVisible()
   await expect(page.getByText('Lightning Rod')).toBeVisible()
-  await expect(page.getByText('Gizli')).toBeVisible()
+  await expect(page.getByText('Hidden')).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'EVRİM ZİNCİRİ' })
+    page.getByRole('heading', { name: 'EVOLUTION CHAIN' })
   ).toBeVisible()
   await expect(page.getByRole('link', { name: /Raichu/i })).toBeVisible()
 })
@@ -43,7 +43,7 @@ test('shows pokemon detail data for authenticated users', async ({ page }) => {
 test('navigates to pokemon detail from header search', async ({ page }) => {
   await page.goto('/login')
   await page.getByRole('button', { name: /Güven Altuntaş/i }).click()
-  await page.locator('main').getByRole('button', { name: 'Giriş Yap' }).click()
+  await page.locator('main').getByRole('button', { name: 'Login' }).click()
 
   await (await getHeaderSearch(page)).fill('rai')
   await page.getByRole('option', { name: 'Raichu #0026' }).click()
@@ -100,7 +100,7 @@ test('submits exact search matches and clears unknown searches', async ({
 }) => {
   await page.goto('/login')
   await page.getByRole('button', { name: /Güven Altuntaş/i }).click()
-  await page.locator('main').getByRole('button', { name: 'Giriş Yap' }).click()
+  await page.locator('main').getByRole('button', { name: 'Login' }).click()
 
   await page.goto('/pokemon')
 
@@ -117,8 +117,8 @@ test('submits exact search matches and clears unknown searches', async ({
     .poll(() =>
       page.evaluate(() => document.activeElement?.getAttribute('aria-label'))
     )
-    .not.toBe('Pokémon ara')
-  await expect(page.getByText('En az 2 karakter yazın')).toBeHidden()
+    .not.toBe('Search Pokémon')
+  await expect(page.getByText('Type at least 2 characters')).toBeHidden()
 
   const nextSearchInput = await getHeaderSearch(page)
 

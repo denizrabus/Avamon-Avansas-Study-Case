@@ -51,8 +51,8 @@ export function HomePage() {
     shouldShowRecentlyVisited ? [] : randomPopularReferences
   )
   const featuredSectionTitle = shouldShowRecentlyVisited
-    ? 'Son Ziyaret Edilenler'
-    : 'Popüler Pokémon'
+    ? 'Recently Visited'
+    : 'Popular Pokémon'
   const featuredPokemon = shouldShowRecentlyVisited
     ? recentlyVisitedPokemon
     : popularPokemonQuery.data ?? []
@@ -69,22 +69,21 @@ export function HomePage() {
         <div className="mx-auto grid max-w-page items-center gap-6 px-6 py-10 phone-lg:py-12 tablet-sm:min-h-[24rem] tablet-sm:grid-cols-[minmax(0,1fr)_minmax(18rem,28rem)] tablet-sm:gap-8 tablet-sm:py-0 tablet:min-h-[26rem] tablet:grid-cols-[minmax(0,1fr)_minmax(24rem,38rem)] tablet:gap-10 tablet:py-0 desktop:min-h-[28rem] wide:max-w-wide-page">
           <div className="relative z-10">
             <h1
-              aria-label="Tüm Pokémon'ları Keşfet"
+              aria-label="Explore All Pokémon"
               className="max-w-2xl text-4xl font-bold leading-none phone-lg:text-5xl desktop:text-6xl"
             >
-              Tüm Pokémon'ları
-              <span className="mt-2 block text-avamon-yellow">Keşfet</span>
+              Explore All
+              <span className="mt-2 block text-avamon-yellow">Pokémon</span>
             </h1>
             <p className="mt-6 max-w-xl text-base text-white/90 tablet:text-xl">
-              1000'den fazla Pokémon arasından arama yap, filtrele ve
-              detaylarını incele.
+              Search, filter, and explore the details of 1,000+ Pokémon.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink
                 className="px-7"
                 to={routes.pokemonList}
               >
-                Tüm Pokémon
+                All Pokémon
                 <ArrowRight aria-hidden className="size-5" />
               </ButtonLink>
 
@@ -94,7 +93,7 @@ export function HomePage() {
                   to={routes.login}
                   variant="secondary"
                 >
-                  Giriş Yap
+                  Login
                 </ButtonLink>
               ) : null}
             </div>
@@ -125,7 +124,7 @@ export function HomePage() {
             className="mt-8 rounded-card border border-avamon-red/30 bg-surface p-6 text-sm font-bold text-avamon-red shadow-card"
             role="alert"
           >
-            Popüler Pokémonlar yüklenemedi. Lütfen tekrar deneyin.
+            Featured Pokémon could not be loaded. Please try again.
           </div>
         ) : null}
 

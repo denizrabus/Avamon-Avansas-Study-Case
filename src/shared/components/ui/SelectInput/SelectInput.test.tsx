@@ -7,16 +7,16 @@ import { SelectInput, type SelectInputOption } from './SelectInput'
 type SortValue = 'name-asc' | 'number-asc' | 'number-desc'
 
 const options: Array<SelectInputOption<SortValue>> = [
-  { label: 'Numara: Artan', value: 'number-asc' },
-  { label: 'Numara: Azalan', value: 'number-desc' },
-  { label: 'İsim: A - Z', value: 'name-asc' },
+  { label: 'Number: Ascending', value: 'number-asc' },
+  { label: 'Number: Descending', value: 'number-desc' },
+  { label: 'Name: A - Z', value: 'name-asc' },
 ]
 
 describe('SelectInput', () => {
   it('does not render a dropdown indicator for header search variant', () => {
     const { container } = render(
       <SelectInput<SortValue>
-        ariaLabel="Pokémon ara"
+        ariaLabel="Search Pokémon"
         isSearchable
         onChange={vi.fn()}
         options={options}
@@ -34,17 +34,17 @@ describe('SelectInput', () => {
 
     render(
       <SelectInput<SortValue>
-        ariaLabel="Sıralama"
+        ariaLabel="Sort order"
         onChange={handleChange}
         options={options}
         value="number-asc"
       />
     )
 
-    expect(screen.getByText('Numara: Artan')).toBeVisible()
+    expect(screen.getByText('Number: Ascending')).toBeVisible()
 
-    await user.click(screen.getByRole('combobox', { name: 'Sıralama' }))
-    await user.click(screen.getByText('İsim: A - Z'))
+    await user.click(screen.getByRole('combobox', { name: 'Sort order' }))
+    await user.click(screen.getByText('Name: A - Z'))
 
     expect(handleChange).toHaveBeenCalledWith('name-asc')
   })

@@ -12,7 +12,7 @@ export function PokemonSprites({ sprites }: { sprites: PokemonSprite[] }) {
         className="text-sm font-semibold uppercase tracking-wide text-muted"
         id="pokemon-sprites-title"
       >
-        Görünümler
+        SPRITES
       </h2>
       <div className="flex flex-wrap gap-2 tablet:gap-3">
         {sprites.map((sprite) => (

@@ -37,7 +37,7 @@ export function LoginForm({ error, footer, onSubmit }: LoginFormProps) {
     <Card className="mx-auto w-full max-w-[440px] p-10 shadow-card">
       <div className="mb-6 flex items-center justify-center gap-3">
         <AvamonMark className="size-6 text-avamon-red" />
-        <h1 className="text-2xl font-bold text-ink">Avamon'a Giriş</h1>
+        <h1 className="text-2xl font-bold text-ink">Login to Avamon</h1>
       </div>
 
       <form
@@ -56,7 +56,7 @@ export function LoginForm({ error, footer, onSubmit }: LoginFormProps) {
         <FormField
           error={errors.username?.message}
           htmlFor="username"
-          label="Kullanıcı Adı"
+          label="Username"
           required
         >
           <Input
@@ -69,7 +69,7 @@ export function LoginForm({ error, footer, onSubmit }: LoginFormProps) {
         <FormField
           error={errors.password?.message}
           htmlFor="password"
-          label="Şifre"
+          label="Password"
           required
         >
           <Input
@@ -81,7 +81,7 @@ export function LoginForm({ error, footer, onSubmit }: LoginFormProps) {
         </FormField>
 
         <Button className="w-full" type="submit" variant="danger">
-          Giriş Yap
+          Login
         </Button>
       </form>
 
@@ -92,7 +92,7 @@ export function LoginForm({ error, footer, onSubmit }: LoginFormProps) {
           className="text-center text-sm font-black uppercase tracking-wide text-muted"
           id="demo-users-title"
         >
-          Demo Kullanıcılar
+          Demo Users
         </h2>
 
         <div className="grid grid-cols-1 gap-3 phone-lg:grid-cols-2">

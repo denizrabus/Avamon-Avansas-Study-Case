@@ -24,7 +24,7 @@ async function fetchJson<TResponse>(url: string): Promise<TResponse> {
   const response = await fetch(url)
 
   if (!response.ok) {
-    throw new Error('Pokemon verisi yüklenemedi')
+    throw new Error('Pokemon data could not be loaded')
   }
 
   return (await response.json()) as TResponse

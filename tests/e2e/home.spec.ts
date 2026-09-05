@@ -18,13 +18,13 @@ test('renders home hero and popular pokemon cards', async ({ page }) => {
   await page.goto('/')
 
   await expect(
-    page.getByRole('heading', { name: "Tüm Pokémon'ları Keşfet" })
+    page.getByRole('heading', { name: 'Explore All Pokémon' })
   ).toBeVisible()
   await expect(
-    page.locator('main').getByRole('link', { name: 'Tüm Pokémon' })
+    page.locator('main').getByRole('link', { name: 'All Pokémon' })
   ).toHaveAttribute('href', '/pokemon')
   await expect(
-    page.locator('main').getByRole('link', { name: 'Giriş Yap' })
+    page.locator('main').getByRole('link', { name: 'Login' })
   ).toHaveAttribute('href', '/login')
   if (isMobileViewport(page)) {
     await expect(page.getByRole('img', { name: 'Charizard' }))
@@ -74,7 +74,7 @@ test('shows recently visited pokemon after three detail visits', async ({
   await page.goto('/')
 
   await expect(
-    page.getByRole('heading', { name: 'Son Ziyaret Edilenler' })
+    page.getByRole('heading', { name: 'Recently Visited' })
   ).toBeVisible()
   await expect(page.getByRole('link', { name: /Pikachu/i })).toBeVisible()
   await expect(page.getByRole('link', { name: /Charmander/i })).toBeVisible()

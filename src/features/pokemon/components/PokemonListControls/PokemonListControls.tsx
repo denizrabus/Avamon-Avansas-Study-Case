@@ -25,16 +25,16 @@ const sortOptions: Array<{
   label: string
   value: PokemonSortOption
 }> = [
-  { label: 'Numara: Artan', value: 'number-asc' },
-  { label: 'Numara: Azalan', value: 'number-desc' },
-  { label: 'İsim: A - Z', value: 'name-asc' },
-  { label: 'İsim: Z - A', value: 'name-desc' },
+  { label: 'Number: Ascending', value: 'number-asc' },
+  { label: 'Number: Descending', value: 'number-desc' },
+  { label: 'Name: A - Z', value: 'name-asc' },
+  { label: 'Name: Z - A', value: 'name-desc' },
 ]
 
 type PokemonTypeFilterValue = PokemonTypeName | ''
 
 const typeOptions: Array<SelectInputOption<PokemonTypeFilterValue>> = [
-  { label: 'Tüm Türler', value: '' },
+  { label: 'All Types', value: '' },
   ...pokemonTypeNames.map((type) => ({
     label: formatPokemonName(type),
     value: type,
@@ -52,7 +52,7 @@ export function PokemonListControls({
   return (
     <div className="grid gap-3 phone-lg:grid-cols-2 tablet:flex tablet:items-center">
       <SelectInput
-        ariaLabel="Tür filtresi"
+        ariaLabel="Type filter"
         className="min-w-0 tablet:min-w-40"
         onChange={(value) => onTypeChange(value ? value : null)}
         options={typeOptions}
@@ -60,7 +60,7 @@ export function PokemonListControls({
       />
 
       <SelectInput
-        ariaLabel="Sıralama"
+        ariaLabel="Sort order"
         className="min-w-0 tablet:min-w-44"
         onChange={(value) => {
           if (value) {
@@ -72,12 +72,12 @@ export function PokemonListControls({
       />
 
       <div
-        aria-label="Görünüm modu"
+        aria-label="View mode"
         className="inline-flex h-11 w-fit overflow-hidden rounded-lg border border-line bg-surface shadow-sm justify-self-end phone-lg:col-span-2 tablet:col-span-1"
         role="group"
       >
         <button
-          aria-label="Grid görünüm"
+          aria-label="Grid view"
           aria-pressed={displayMode === 'grid'}
           className={`grid size-11 place-items-center transition ${
             displayMode === 'grid'
@@ -90,7 +90,7 @@ export function PokemonListControls({
           <Grid2X2 aria-hidden="true" size={16} />
         </button>
         <button
-          aria-label="Liste görünüm"
+          aria-label="List view"
           aria-pressed={displayMode === 'list'}
           className={`grid size-11 place-items-center transition ${
             displayMode === 'list'

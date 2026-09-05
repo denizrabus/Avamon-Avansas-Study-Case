@@ -62,15 +62,15 @@ export function PokemonDetailHero({ pokemon }: { pokemon: PokemonDetail }) {
           </p>
           <div className="mt-8 flex flex-wrap gap-4 tablet:gap-6">
             <DetailMetric
-              label="Boy"
+              label="Height"
               value={formatMeasurement(pokemon.heightInMeters, 'm')}
             />
             <DetailMetric
-              label="Kilo"
+              label="Weight"
               value={formatMeasurement(pokemon.weightInKilograms, 'kg')}
             />
             <DetailMetric
-              label="Taban XP"
+              label="Base XP"
               value={pokemon.baseExperience ?? '-'}
             />
           </div>

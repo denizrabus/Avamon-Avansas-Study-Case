@@ -28,7 +28,7 @@ export function AppHeaderDesktopActions({
             onClick={onLogout}
             type="button"
           >
-            Çıkış
+            Logout
           </button>
         </>
       ) : (
@@ -36,7 +36,7 @@ export function AppHeaderDesktopActions({
           className="rounded-full bg-avamon-yellow px-5 py-2.5 text-sm font-bold text-ink transition hover:bg-[#ffd83d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           to={routes.login}
         >
-          Giriş Yap
+          Login
         </Link>
       )}
     </div>

@@ -30,7 +30,7 @@ describe('PokemonImage', () => {
     fireEvent.error(screen.getByRole('img', { name: 'Missingno' }))
 
     expect(
-      screen.getByRole('img', { name: 'Missingno görseli bulunamadı' })
+      screen.getByRole('img', { name: 'Missingno image not available' })
     ).toBeVisible()
   })
 })

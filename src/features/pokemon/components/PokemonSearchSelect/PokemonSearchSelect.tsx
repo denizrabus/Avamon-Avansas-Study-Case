@@ -129,7 +129,7 @@ export function PokemonSearchSelect({
 
   return (
     <SelectInput
-      ariaLabel="Pokémon ara"
+      ariaLabel="Search Pokémon"
       className={className}
       formatOptionLabel={(option, meta) =>
         meta.context === 'menu' ? (
@@ -159,11 +159,11 @@ export function PokemonSearchSelect({
       onInputChange={setInputValue}
       onKeyDown={handleKeyDown}
       noOptionsMessage={
-        canShowAutocomplete ? 'Sonuç bulunamadı' : 'En az 2 karakter yazın'
+        canShowAutocomplete ? 'No results found' : 'Type at least 2 characters'
       }
       options={options}
       placeholder={
-        referencesQuery.isLoading ? 'Pokémonlar yükleniyor...' : 'Pokémon ara...'
+        referencesQuery.isLoading ? 'Loading Pokémon...' : 'Search Pokémon...'
       }
       selectRef={selectRef}
       value={null}
