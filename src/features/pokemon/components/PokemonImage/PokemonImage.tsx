@@ -7,6 +7,7 @@ interface PokemonImageProps {
   className?: string
   fallbackClassName?: string
   imageClassName?: string
+  placeholderClassName?: string
   priority?: boolean
   src: string
 }
@@ -16,6 +17,7 @@ export function PokemonImage({
   className,
   fallbackClassName,
   imageClassName,
+  placeholderClassName,
   priority = false,
   src,
 }: PokemonImageProps) {
@@ -32,7 +34,10 @@ export function PokemonImage({
       {!isLoaded && !hasError ? (
         <span
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-b from-white to-[#f6f6f6]"
+          className={cn(
+            'absolute inset-0 bg-gradient-to-b from-white to-[#f6f6f6]',
+            placeholderClassName
+          )}
         >
           <span className="absolute inset-0 animate-pulse bg-[linear-gradient(110deg,transparent_20%,rgb(255_255_255_/_0.72)_45%,transparent_70%)]" />
           <img

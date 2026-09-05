@@ -54,6 +54,7 @@
 
   --breakpoint-phone: 22.5rem;
   --breakpoint-phone-lg: 25.75rem;
+  --breakpoint-tablet-sm: 48rem;
   --breakpoint-tablet: 64rem;
   --breakpoint-desktop: 80rem;
   --breakpoint-wide: 160rem;

@@ -30,7 +30,7 @@ export function AppHeader({ onLogout }: AppHeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 bg-avamon-red shadow-md">
-      <div className="mx-auto flex min-h-16 max-w-page items-center gap-6 px-6 tablet:gap-10">
+      <div className="mx-auto flex min-h-16 max-w-page items-center gap-6 px-6 tablet:gap-10 wide:max-w-wide-page">
         <AppLogo />
 
         <nav className="hidden items-center gap-6 text-sm  text-white tablet:flex">

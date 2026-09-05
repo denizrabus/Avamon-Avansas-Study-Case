@@ -134,7 +134,7 @@ export function PokemonListPage() {
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-page-bg py-8 tablet:py-12">
-      <section className="mx-auto max-w-page px-6">
+      <section className="mx-auto max-w-page px-6 wide:max-w-wide-page">
         <div className="flex flex-col gap-5 tablet:flex-row tablet:items-center tablet:justify-between">
           <div className="flex items-start justify-between gap-4 tablet:items-end tablet:justify-start">
             <h1 className="text-3xl font-bold leading-tight text-ink tablet:text-4xl">

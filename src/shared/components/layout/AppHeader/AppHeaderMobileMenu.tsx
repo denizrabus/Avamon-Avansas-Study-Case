@@ -22,7 +22,7 @@ export function AppHeaderMobileMenu({
       className="border-t border-white/15 bg-avamon-red px-6 pb-5 pt-4 tablet:hidden"
       role="region"
     >
-      <div className="mx-auto flex max-w-page flex-col gap-4">
+      <div className="mx-auto flex max-w-page flex-col gap-4 wide:max-w-wide-page">
         <nav className="flex flex-col gap-3 text-sm font-bold text-white">
           <Link onClick={onClose} to={routes.pokemonList}>
             Tüm Pokémonlar

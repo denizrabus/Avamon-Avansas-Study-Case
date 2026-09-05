@@ -24,7 +24,7 @@ function PokemonDetailContent({ pokemon }: { pokemon: PokemonDetail }) {
       <PokemonDetailHero pokemon={pokemon} />
 
       <section className="bg-page-bg">
-        <div className="mx-auto max-w-page space-y-8 px-6 py-8 tablet:space-y-10 tablet:py-10">
+        <div className="mx-auto max-w-page space-y-8 px-6 py-8 tablet:space-y-10 tablet:py-10 wide:max-w-wide-page">
           <PokemonDetailStats stats={pokemon.stats} />
 
           <div className="border-t border-line pt-8 tablet:pt-10">
@@ -66,7 +66,7 @@ export function PokemonDetailPage() {
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-page-bg">
-      <div className="mx-auto max-w-page px-6 py-5">
+      <div className="mx-auto max-w-page px-6 py-5 wide:max-w-wide-page">
         <Link
           className="inline-flex items-center gap-2 text-sm font-semibold text-avamon-red transition hover:text-avamon-red/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-avamon-red"
           to={routes.pokemonList}
@@ -77,7 +77,7 @@ export function PokemonDetailPage() {
       </div>
 
       {detailQuery.isLoading ? (
-        <section className="mx-auto grid max-w-page gap-10 px-6 py-12 tablet:grid-cols-[22rem_1fr]">
+        <section className="mx-auto grid max-w-page gap-10 px-6 py-12 tablet:grid-cols-[22rem_1fr] wide:max-w-wide-page">
           <div className="h-80 animate-pulse rounded-card bg-gradient-to-b from-white to-[#f6f6f6]" />
           <div className="space-y-5">
             <div className="h-5 w-20 animate-pulse rounded-full bg-line" />
@@ -89,7 +89,7 @@ export function PokemonDetailPage() {
       ) : null}
 
       {detailQuery.isError ? (
-        <section className="mx-auto max-w-page px-6 py-12">
+        <section className="mx-auto max-w-page px-6 py-12 wide:max-w-wide-page">
           <div
             className="rounded-card border border-avamon-red/30 bg-surface p-6 text-sm font-bold text-avamon-red shadow-card"
             role="alert"

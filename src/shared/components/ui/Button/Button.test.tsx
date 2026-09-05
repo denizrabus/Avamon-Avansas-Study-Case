@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from './Button'
+import { Button, ButtonLink } from './Button'
 
 describe('Button', () => {
   it('renders an accessible button with content', () => {
@@ -35,5 +36,16 @@ describe('Button', () => {
     await user.click(screen.getByRole('button', { name: 'Kaydet' }))
 
     expect(handleClick).not.toHaveBeenCalled()
+  })
+
+  it('renders a link with button styles for navigation actions', () => {
+    render(
+      <MemoryRouter>
+        <ButtonLink to="/pokemon">Tüm Pokémon</ButtonLink>
+      </MemoryRouter>
+    )
+
+    expect(screen.getByRole('link', { name: 'Tüm Pokémon' }))
+      .toHaveAttribute('href', '/pokemon')
   })
 })

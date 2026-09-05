@@ -33,7 +33,7 @@ export function PokemonDetailHero({ pokemon }: { pokemon: PokemonDetail }) {
 
   return (
     <section className={pokemonTypeDetailHeroBackgroundClasses[primaryType]}>
-      <div className="mx-auto grid max-w-page gap-6 px-6 pb-8 tablet:grid-cols-[22rem_1fr] tablet:items-center tablet:gap-10 desktop:py-10">
+      <div className="mx-auto grid max-w-page gap-6 px-6 pb-8 tablet:grid-cols-[22rem_1fr] tablet:items-center tablet:gap-10 desktop:py-10 wide:max-w-wide-page">
         <div className="grid min-h-56 place-items-center tablet:min-h-80">
           <PokemonImage
             alt={formatPokemonName(pokemon.name)}

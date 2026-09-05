@@ -33,7 +33,7 @@ export function AppHeaderDesktopActions({
         </>
       ) : (
         <Link
-          className="rounded-full bg-avamon-yellow px-5 py-2.5 text-sm font-black text-ink transition hover:bg-[#ffd83d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className="rounded-full bg-avamon-yellow px-5 py-2.5 text-sm font-bold text-ink transition hover:bg-[#ffd83d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           to={routes.login}
         >
           Giriş Yap
