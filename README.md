@@ -22,6 +22,10 @@ The application uses [PokeAPI](https://pokeapi.co/) as the remote data source an
 
 ## Getting Started
 
+### Prerequisites
+
+- Node.js `^20.19.0` or `>=22.12.0` (required by Vite 8)
+
 Install dependencies:
 
 ```bash
@@ -38,6 +42,20 @@ Open the app at:
 
 ```text
 http://localhost:5173
+```
+
+### Running The End-To-End Tests
+
+Playwright needs its browser binary installed once before the first e2e run:
+
+```bash
+npx playwright install chromium
+```
+
+Then run:
+
+```bash
+npm run test:e2e
 ```
 
 ## Available Scripts
@@ -323,5 +341,6 @@ Before submission, run:
 npm run lint
 npm run test:run
 npm run build
+npx playwright install chromium # first time only
 npm run test:e2e
 ```
