@@ -16,10 +16,14 @@ test('lists pokemon with pagination and remembered display mode', async ({
   await expect(page.getByRole('link', { name: /Bulbasaur/i })).toBeVisible()
   await expect(page.getByRole('link', { name: /Pikachu/i })).toBeHidden()
 
+  await page.evaluate(() => window.scrollTo(0, 400))
   await page.getByRole('button', { name: 'Next page' }).click()
 
   await expect(page).toHaveURL('/pokemon?page=2')
   await expect(page.getByRole('link', { name: /Pikachu/i })).toBeVisible()
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY))
+    .toBe(0)
 
   await page.getByRole('button', { name: 'List view' }).click()
   await page.reload()

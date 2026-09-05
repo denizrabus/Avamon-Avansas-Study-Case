@@ -76,6 +76,7 @@ The case does not require a backend authentication service, so demo users are ke
 - Autocomplete options with Pokémon image, name, and number.
 - Exact-match search submit navigation.
 - All Pokémon list with 24 items per page.
+- Scroll to top on pagination, so page changes are visible instead of landing mid-scroll.
 - Type filtering.
 - Sorting by number and name.
 - Grid/list display mode selection.

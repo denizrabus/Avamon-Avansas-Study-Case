@@ -386,3 +386,18 @@ Trade-off:
 
 - Visual pixel-perfect testing is not automated.
 - Manual responsive QA is still needed before final submission.
+
+## 2026-09-05 - Scroll To Top On Pagination
+
+Changing pages in the Pokémon list (`PokemonListPage`) previously left the scroll position untouched, so users who paginated from the bottom of a long grid landed on the new page already scrolled past its first rows, with no visual signal that the content had changed.
+
+`PokemonListPage` now scrolls the window to the top with `window.scrollTo({ behavior: 'smooth', top: 0 })` whenever `currentPage` changes, guarded by an `isInitialRender` ref so the initial mount (including a deep link like `/pokemon?page=3`) does not trigger an unwanted scroll.
+
+Reasoning:
+
+- This matches common e-commerce/listing UX, where a page change should bring the user back to the top of the new result set.
+- Scrolling on `currentPage` (not on every render) also covers the clamp-redirect case (an out-of-range `page` param snapping back to a valid page) since that changes `currentPage` too.
+
+Trade-off:
+
+- No explicit focus management or `aria-live` announcement was added for screen reader users; the scroll is a visual affordance only. This was scoped out to keep the change small, but is a reasonable follow-up if accessibility auditing becomes a priority.

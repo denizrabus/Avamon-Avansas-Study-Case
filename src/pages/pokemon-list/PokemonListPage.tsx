@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -75,6 +75,16 @@ export function PokemonListPage() {
     [currentPage, sortedReferences]
   )
   const summariesQuery = usePokemonSummariesQuery(pageReferences)
+  const isInitialRender = useRef(true)
+
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false
+      return
+    }
+
+    window.scrollTo({ behavior: 'smooth', top: 0 })
+  }, [currentPage])
 
   useEffect(() => {
     if (!referencesQuery.data) {
