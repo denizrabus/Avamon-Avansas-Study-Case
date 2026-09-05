@@ -7,6 +7,7 @@ AI assistance is used as a development aid in this repository. The goal is to ma
 - Human decisions own product scope, architecture trade-offs, and final review.
 - AI may assist with implementation, test drafting, refactoring suggestions, and documentation.
 - AI-generated changes must follow `AGENTS.md`.
+- AI-assisted workflow details are documented in `docs/ai/AI_PIPELINE.md`.
 - AI should not add dependencies, change architecture, or broaden scope without documenting the reason.
 
 ## Workflow
