@@ -14,15 +14,15 @@ export function PokemonSprites({ sprites }: { sprites: PokemonSprite[] }) {
       >
         SPRITES
       </h2>
-      <div className="flex flex-wrap gap-2 tablet:gap-3">
+      <div className="grid grid-cols-4 gap-2 tablet:flex tablet:flex-wrap tablet:gap-3">
         {sprites.map((sprite) => (
           <div
-            className="grid size-20 place-items-center rounded-card bg-surface p-3 tablet:size-28 tablet:p-4"
+            className="grid aspect-square place-items-center rounded-card bg-surface p-2 tablet:size-28 tablet:p-3"
             key={`${sprite.label}-${sprite.imageUrl}`}
           >
             <PokemonImage
               alt={sprite.label}
-              className="size-16 tablet:size-20"
+              className="size-14 phone-lg:size-16 tablet:size-24"
               fallbackClassName="size-10"
               imageClassName="size-full object-contain"
               src={sprite.imageUrl}
