@@ -78,7 +78,7 @@ export function PokemonDetailPage() {
 
       {detailQuery.isLoading ? (
         <section className="mx-auto grid max-w-page gap-10 px-6 py-12 tablet:grid-cols-[22rem_1fr] wide:max-w-wide-page">
-          <div className="h-80 animate-pulse rounded-card bg-gradient-to-b from-white to-[#f6f6f6]" />
+          <div className="h-80 animate-pulse rounded-card bg-gradient-to-b from-white to-card-image-bg" />
           <div className="space-y-5">
             <div className="h-5 w-20 animate-pulse rounded-full bg-line" />
             <div className="h-14 w-64 animate-pulse rounded-full bg-line" />

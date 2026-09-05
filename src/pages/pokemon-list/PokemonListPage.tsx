@@ -172,8 +172,8 @@ export function PokemonListPage() {
                   className="h-64 animate-pulse overflow-hidden rounded-card bg-surface shadow-card desktop:h-80"
                   key={index}
                 >
-                  <div className="h-48 bg-gradient-to-b from-white to-[#f6f6f6]" />
-                  <div className="h-32 bg-gradient-to-r from-white to-[#f4f4ed]" />
+                  <div className="h-48 bg-gradient-to-b from-white to-card-image-bg" />
+                  <div className="h-32 bg-gradient-to-r from-white to-type-normal-soft" />
                 </div>
               ))}
             </div>
@@ -181,7 +181,7 @@ export function PokemonListPage() {
             <div className="mt-8 flex flex-col gap-4">
               {Array.from({ length: itemsPerPage }, (_, index) => (
                 <div
-                  className="grid min-h-24 animate-pulse grid-cols-[4rem_4.5rem_1fr] items-center gap-4 rounded-card bg-gradient-to-r from-white to-[#f4f4ed] px-5 py-4 shadow-card phone-lg:grid-cols-[5rem_5rem_1fr_auto]"
+                  className="grid min-h-24 animate-pulse grid-cols-[4rem_4.5rem_1fr] items-center gap-4 rounded-card bg-gradient-to-r from-white to-type-normal-soft px-5 py-4 shadow-card phone-lg:grid-cols-[5rem_5rem_1fr_auto]"
                   key={index}
                 >
                   <div className="size-16 rounded-full bg-line/40" />

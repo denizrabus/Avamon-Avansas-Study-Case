@@ -24,8 +24,8 @@ function HomePopularSkeleton() {
           className="h-80 animate-pulse overflow-hidden rounded-card bg-surface shadow-card tablet:h-[28rem]"
           key={index}
         >
-          <div className="h-56 bg-gradient-to-b from-white to-[#f6f6f6] tablet:h-80" />
-          <div className="h-32 bg-gradient-to-r from-white to-[#f4f4ed]" />
+          <div className="h-56 bg-gradient-to-b from-white to-card-image-bg tablet:h-80" />
+          <div className="h-32 bg-gradient-to-r from-white to-type-normal-soft" />
         </div>
       ))}
     </div>

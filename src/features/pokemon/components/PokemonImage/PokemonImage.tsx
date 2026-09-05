@@ -35,7 +35,7 @@ export function PokemonImage({
         <span
           aria-hidden="true"
           className={cn(
-            'absolute inset-0 bg-gradient-to-b from-white to-[#f6f6f6]',
+            'absolute inset-0 bg-gradient-to-b from-white to-card-image-bg',
             placeholderClassName
           )}
         >

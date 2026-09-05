@@ -49,7 +49,7 @@ export function AppHeaderMobileMenu({
           </div>
         ) : (
           <Link
-            className="inline-flex w-fit rounded-full bg-avamon-yellow px-5 py-2.5 text-sm font-black text-ink transition hover:bg-[#ffd83d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="inline-flex w-fit rounded-full bg-avamon-yellow px-5 py-2.5 text-sm font-black text-ink transition hover:bg-avamon-yellow-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             onClick={onClose}
             to={routes.login}
           >

@@ -22,7 +22,7 @@ export function PokemonCard({ pokemon, priority = false }: PokemonCardProps) {
       className="group flex h-full min-h-64 flex-col overflow-hidden rounded-card bg-surface shadow-card transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-avamon-red desktop:min-h-[20rem]"
       to={`/pokemon/${pokemon.name}`}
     >
-      <div className="flex aspect-[4/3] shrink-0 items-center justify-center bg-gradient-to-b from-white to-[#f6f6f6]">
+      <div className="flex aspect-[4/3] shrink-0 items-center justify-center bg-gradient-to-b from-white to-card-image-bg">
         <PokemonImage
           alt={formatPokemonName(pokemon.name)}
           className="h-full w-full"
